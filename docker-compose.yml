@@ -1,0 +1,13 @@
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: muletrace-falkordb
+    ports:
+      - "6379:6379" # Redis protocol (FalkorDB database)
+      - "3000:3000" # FalkorDB Browser
+    volumes:
+      - falkordb-data:/data
+    restart: unless-stopped
+
+volumes:
+  falkordb-data:

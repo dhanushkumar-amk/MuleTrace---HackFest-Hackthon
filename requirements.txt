@@ -1,0 +1,8 @@
+falkordb
+fastapi
+uvicorn[standard]
+python-dotenv
+faker
+pydantic
+httpx
+groq
