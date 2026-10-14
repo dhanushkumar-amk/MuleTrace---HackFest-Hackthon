@@ -4,6 +4,14 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
 
 **Status: Phase 1 — project setup only.** Graph schema, seed data, and agent logic come next.
 
+## Project summary
+
+- [`docs/SCOPE.md`](docs/SCOPE.md) — what we build (and deliberately don't), Track 01
+  criteria mapping, risks.
+- [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — the exact 2-minute demo, second by second.
+- [`docs/TOOLS.md`](docs/TOOLS.md) — the 8 agent graph tools and their JSON contracts.
+- [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) — 12 testable pass/fail checks.
+
 ## Stack
 - **Database:** FalkorDB (Docker), graph named `muletrace`
 - **Backend:** FastAPI + the `falkordb` Python client
