@@ -102,18 +102,24 @@ account family-share is distinguishable).
   MATCH (:Account {id:$id})-[:USES_DEVICE]->(d:Device)<-[:USES_DEVICE]-(o:Account)
   WHERE o.id <> $id RETURN d.id, collect(DISTINCT o.id)
   ```
+  Followed by a scoped count `MATCH (d:Device)<-[:USES_DEVICE]-(a:Account) WHERE d.id IN $dev_ids RETURN d.id, count(a)`.
 - **Example (Mule B):**
   ```json
   {"items":{"total":1,"items":[{"device_id":"DEV_0593",
     "sharing_accounts":["ACC_0468"],"share_count":2,
     "first_seen":1723185000,"last_seen":1792042200}]}}
   ```
-- **Runtime:** ~6–10 ms
+- **Runtime:** ~2–3 ms
 
 ## `detect_rapid_hops(account_id=None, window_seconds=600)`
 Accounts that forwarded ≥70% of an incoming amount within the window, with the
-matched in/out transactions. `account_id=None` scans the whole graph → top 20.
-- **Cypher (fetch):** `MATCH (s:Account)-[p:PAID]->(t:Account) RETURN ...`
+matched in/out transactions. `account_id=None` scans the whole graph → top 20. When `account_id` is supplied, only edges connected to `account_id` are fetched.
+- **Cypher (fetch):**
+  - If `account_id` is provided:
+    `MATCH (s:Account)-[p:PAID]->(t:Account {id:$id}) RETURN ...` and
+    `MATCH (s:Account {id:$id})-[p:PAID]->(t:Account) RETURN ...`
+  - If scanning all:
+    `MATCH (s:Account)-[p:PAID]->(t:Account) RETURN ...`
 - **Example (Mule A):**
   ```json
   {"items":{"total":14,"items":[{"account":"ACC_0462",
@@ -122,7 +128,7 @@ matched in/out transactions. `account_id=None` scans the whole graph → top 20.
      "matched_out":[{"txn_id":"TXN_005012","to":"ACC_0463","amount":40000},
                     {"txn_id":"TXN_005013","to":"ACC_0464","amount":45000}]}, ...]}}
   ```
-- **Runtime:** ~120 ms
+- **Runtime:** ~1–2 ms (single account), ~115 ms (full scan)
 
 ## `detect_fan_in(window_seconds=86400, min_senders=6)`
 Smurf aggregators: accounts receiving from many distinct senders in a window, then
@@ -139,8 +145,11 @@ forwarding onward; ranked by onward-forward ratio, top 20. Ring 3 is **layered**
 
 ## `detect_fan_out(account_id, window_seconds=3600)`
 Accounts that split an incoming amount to ≥2 receivers quickly.
+- **Cypher:**
+  `MATCH (s:Account)-[p:PAID]->(t:Account {id:$id}) RETURN ...` and
+  `MATCH (s:Account {id:$id})-[p:PAID]->(t:Account) RETURN ...`
 - **Example (Mule A):** `in: 85k`, `splits: [40k→B, 45k→C]`
-- **Runtime:** ~120 ms
+- **Runtime:** ~1–2 ms
 
 ## `get_neighborhood(account_id, hops=2, limit=60)`
 Nodes/edges for the UI graph view (money = PAID edges), capped.

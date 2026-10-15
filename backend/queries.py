@@ -105,17 +105,26 @@ def get_account_profile(graph, account_id):
     dev_rows = _rows(graph,
                      "MATCH (:Account {id:$id})-[:USES_DEVICE]->(d:Device) "
                      "RETURN d.id, d.os", id=account_id)
-    dev_share = dict(_rows(graph,
-                           "MATCH (d:Device)<-[:USES_DEVICE]-(o:Account) "
-                           "RETURN d.id, count(o)"))
+    dev_ids = [d for d, _ in dev_rows]
+    dev_share = {}
+    if dev_ids:
+        dev_share = dict(_rows(graph,
+                               "MATCH (d:Device)<-[:USES_DEVICE]-(o:Account) "
+                               "WHERE d.id IN $dev_ids "
+                               "RETURN d.id, count(o)", dev_ids=dev_ids))
     devices = [{"device_id": d, "os": os_, "share_count": dev_share.get(d, 1)}
                for d, os_ in dev_rows]
+
     ph_rows = _rows(graph,
                     "MATCH (:Account {id:$id})-[:REGISTERED_PHONE]->(p:Phone) "
                     "RETURN p.id, p.number", id=account_id)
-    ph_share = dict(_rows(graph,
-                          "MATCH (p:Phone)<-[:REGISTERED_PHONE]-(o:Account) "
-                          "RETURN p.id, count(o)"))
+    ph_ids = [p for p, _ in ph_rows]
+    ph_share = {}
+    if ph_ids:
+        ph_share = dict(_rows(graph,
+                              "MATCH (p:Phone)<-[:REGISTERED_PHONE]-(o:Account) "
+                              "WHERE p.id IN $ph_ids "
+                              "RETURN p.id, count(o)", ph_ids=ph_ids))
     phones = [{"phone_id": p, "number": num, "share_count": ph_share.get(p, 1)}
               for p, num in ph_rows]
 
@@ -170,14 +179,17 @@ def trace_money_forward(graph, start_account_id, start_time, max_hops=8,
                     continue
                 if min_amount is not None and amt < min_amount:
                     continue
+                if dst in p["path"]:
+                    continue
                 hop = {"account": dst, "txn_id": txn, "amount": _i(amt),
                        "timestamp": _i(ts)}
-                results.append({"path": p["path"] + [dst], "hops": p["hops"] + [hop]})
+                new_path = p["path"] + [dst]
+                new_hops = p["hops"] + [hop]
+                results.append({"path": new_path, "hops": new_hops})
                 if len(results) >= max_paths:
                     truncated = True
                     break
-                new_frontier.append({"path": p["path"] + [dst],
-                                     "hops": p["hops"] + [hop], "last_ts": ts})
+                new_frontier.append({"path": new_path, "hops": new_hops, "last_ts": ts})
             if len(results) >= max_paths:
                 break
         if len(results) >= max_paths:
@@ -186,7 +198,7 @@ def trace_money_forward(graph, start_account_id, start_time, max_hops=8,
 
     paths = [_path_out(r) for r in results]
     return {"start": start_account_id, "start_time": start_time,
-            "max_hops": max_hops, "paths": _wrap(paths, max_paths)}
+            "max_hops": max_hops, "paths": _wrap(paths, max_paths, truncated=truncated)}
 
 
 def _path_out(r):
@@ -249,8 +261,13 @@ def find_shared_devices(graph, account_id):
                  "MATCH (:Account {id:$id})-[:USES_DEVICE]->(d:Device)<-[:USES_DEVICE]-(o:Account) "
                  "WHERE o.id <> $id "
                  "RETURN d.id, collect(DISTINCT o.id)", id=account_id)
-    share_count = dict(_rows(graph,
-                             "MATCH (d:Device)<-[:USES_DEVICE]-(a:Account) RETURN d.id, count(a)"))
+    dev_ids = [r[0] for r in rows]
+    share_count = {}
+    if dev_ids:
+        share_count = dict(_rows(graph,
+                                 "MATCH (d:Device)<-[:USES_DEVICE]-(a:Account) "
+                                 "WHERE d.id IN $dev_ids "
+                                 "RETURN d.id, count(a)", dev_ids=dev_ids))
     usage = dict((d, (fs, ls)) for d, fs, ls in _rows(
         graph, "MATCH (:Account {id:$id})-[u:USES_DEVICE]->(d:Device) "
                "RETURN d.id, u.first_seen, u.last_seen", id=account_id))
@@ -271,8 +288,13 @@ def find_shared_phones(graph, account_id):
                  "MATCH (:Account {id:$id})-[:REGISTERED_PHONE]->(p:Phone)<-[:REGISTERED_PHONE]-(o:Account) "
                  "WHERE o.id <> $id "
                  "RETURN p.id, p.number, collect(DISTINCT o.id)", id=account_id)
-    share_count = dict(_rows(graph,
-                             "MATCH (p:Phone)<-[:REGISTERED_PHONE]-(a:Account) RETURN p.id, count(a)"))
+    ph_ids = [r[0] for r in rows]
+    share_count = {}
+    if ph_ids:
+        share_count = dict(_rows(graph,
+                                 "MATCH (p:Phone)<-[:REGISTERED_PHONE]-(a:Account) "
+                                 "WHERE p.id IN $ph_ids "
+                                 "RETURN p.id, count(a)", ph_ids=ph_ids))
     out = [{"phone_id": pid, "number": num, "sharing_accounts": sorted(others),
             "share_count": share_count.get(pid, 0)} for pid, num, others in rows
            if others]
@@ -283,8 +305,15 @@ def find_shared_phones(graph, account_id):
 # h) rapid hops: forwarded >=70% of an incoming amount within a window
 # ---------------------------------------------------------------------------
 def detect_rapid_hops(graph, account_id=None, window_seconds=600, limit=20):
-    rows = _rows(graph, "MATCH (s:Account)-[p:PAID]->(t:Account) "
-                        "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id")
+    if account_id:
+        in_rows = _rows(graph, "MATCH (s:Account)-[p:PAID]->(t:Account {id:$id}) "
+                               "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id", id=account_id)
+        out_rows = _rows(graph, "MATCH (s:Account {id:$id})-[p:PAID]->(t:Account) "
+                                "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id", id=account_id)
+        rows = in_rows + out_rows
+    else:
+        rows = _rows(graph, "MATCH (s:Account)-[p:PAID]->(t:Account) "
+                            "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id")
     incoming, outgoing = {}, {}
     for src, dst, amt, ts, tx in rows:
         ts = _i(ts)
@@ -380,10 +409,12 @@ def _densest_window(events, window_seconds):
 # j) fan-out: split an incoming amount to >=2 receivers quickly
 # ---------------------------------------------------------------------------
 def detect_fan_out(graph, account_id, window_seconds=3600, limit=50):
-    rows = _rows(graph, "MATCH (s:Account)-[p:PAID]->(t:Account) "
-                        "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id")
-    incoming = [( _i(ts), _i(amt), tx, src) for src, dst, amt, ts, tx in rows if dst == account_id]
-    outgoing = [(_i(ts), _i(amt), tx, dst) for src, dst, amt, ts, tx in rows if src == account_id]
+    inc_rows = _rows(graph, "MATCH (s:Account)-[p:PAID]->(t:Account {id:$id}) "
+                            "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id", id=account_id)
+    out_rows = _rows(graph, "MATCH (s:Account {id:$id})-[p:PAID]->(t:Account) "
+                            "RETURN s.id, t.id, p.amount, p.timestamp, p.txn_id", id=account_id)
+    incoming = [(_i(ts), _i(amt), tx, src) for src, dst, amt, ts, tx in inc_rows]
+    outgoing = [(_i(ts), _i(amt), tx, dst) for src, dst, amt, ts, tx in out_rows]
     events = []
     for t_in, amt_in, tx_in, src in incoming:
         outs = [o for o in outgoing if t_in < o[0] <= t_in + window_seconds]
@@ -414,8 +445,8 @@ def get_neighborhood(graph, account_id, hops=2, limit=DEFAULT_NEIGHBOR_LIMIT):
                     "MATCH (a:Account)-[p:PAID]->(b:Account) WHERE a.id IN $ids "
                     "RETURN a.id, b.id, p.amount, p.timestamp, p.txn_id", ids=list(frontier))
         rev = _rows(graph,
-                    "MATCH (a:Account)<-[p:PAID]-(b:Account) WHERE a.id IN $ids "
-                    "RETURN a.id, b.id, p.amount, p.timestamp, p.txn_id", ids=list(frontier))
+                    "MATCH (b:Account)-[p:PAID]->(a:Account) WHERE a.id IN $ids "
+                    "RETURN b.id, a.id, p.amount, p.timestamp, p.txn_id", ids=list(frontier))
         next_frontier = set()
         for src, dst, amt, ts, tx in fwd + rev:
             key = (src, dst, tx)
@@ -429,6 +460,8 @@ def get_neighborhood(graph, account_id, hops=2, limit=DEFAULT_NEIGHBOR_LIMIT):
             nodes.add(src)
             if dst not in expanded:
                 next_frontier.add(dst)
+            if src not in expanded:
+                next_frontier.add(src)
         frontier = next_frontier
         if len(nodes) >= limit or not frontier:
             break
@@ -442,14 +475,14 @@ def get_neighborhood(graph, account_id, hops=2, limit=DEFAULT_NEIGHBOR_LIMIT):
                       "balance_held": _i(bal), "is_flagged": bool(flagged)}
     node_list = [{"id": nid, "label": "Account", "props": props.get(nid, {})}
                  for nid in sorted(nodes)]
-    truncated = len(node_list) > limit
     return {"nodes": _wrap(node_list, limit), "edges": _wrap(edges, limit * 4)}
 
 
 # ---------------------------------------------------------------------------
 # helpers
 # ---------------------------------------------------------------------------
-def _wrap(items, cap):
+def _wrap(items, cap, truncated=None):
     items = list(items)
-    return {"truncated": len(items) > cap, "total": len(items),
+    is_trunc = truncated if truncated is not None else (len(items) > cap)
+    return {"truncated": is_trunc, "total": len(items),
             "items": items[:cap]}
