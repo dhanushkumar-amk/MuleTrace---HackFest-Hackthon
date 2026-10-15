@@ -1,6 +1,9 @@
 # Environment / secrets
 .env
 
+# Local agent config (not part of the project)
+.commandcode/
+
 # Python
 __pycache__/
 *.py[cod]
