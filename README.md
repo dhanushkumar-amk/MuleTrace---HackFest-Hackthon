@@ -11,6 +11,7 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
 - [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — the exact 2-minute demo, second by second.
 - [`docs/TOOLS.md`](docs/TOOLS.md) — the 8 agent graph tools and their JSON contracts.
 - [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) — 12 testable pass/fail checks.
+- [`docs/SCHEMA.md`](docs/SCHEMA.md) — node/relationship schema, tool mappings, Mermaid diagram.
 
 ## Stack
 - **Database:** FalkorDB (Docker), graph named `muletrace`
