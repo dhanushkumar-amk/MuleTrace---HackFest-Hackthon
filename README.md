@@ -2,7 +2,7 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 4 — synthetic normal-world dataset ready.** Fraud rings (Phase 5) and FalkorDB loading (Phase 6) come next.
+**Status: Phase 5 — fraud rings + decoy planted on the base world.** FalkorDB loading (Phase 6) comes next.
 
 ## Project summary
 
@@ -36,32 +36,47 @@ muletrace/
 │   ├── create_schema.py  # creates FalkorDB indexes
 │   ├── verify_schema.py  # verifies node/edge types against the schema
 │   ├── generate_data.py  # Phase 4: builds the synthetic normal dataset
-│   ├── validate_data.py  # Phase 4: PASS/FAIL checks + reproducibility
+│   ├── plant_fraud.py    # Phase 5: plants rings + decoy on the base world
+│   ├── validate_data.py  # base-data PASS/FAIL checks + reproducibility
+│   ├── validate_fraud.py # Phase 5: fraud answer-key checks
 │   └── datagen/          # generator core (accounts, devices, transactions, cashout)
+├── tests/
+│   └── ground_truth.json # Phase 5 answer key (rings, freeze list) - committed
 ├── docker-compose.yml
 ├── requirements.txt
 ├── .env.example
 └── .gitignore
 ```
 
-## Synthetic dataset (Phase 4)
+## Synthetic dataset (Phases 4 + 5)
 
-Generate the normal (non-fraud) base world and validate it:
+Generate the normal base world, then plant the fraud rings + decoy on top, then
+validate. Final data lands in `data/generated/` (gitignored) and the answer key in
+`tests/ground_truth.json` (committed). A pristine base snapshot is kept in
+`data/generated/base/` so `plant_fraud.py` is idempotent.
 
 ```bash
-# generate data/generated/ (seed=7, scale=1.0) and refresh data/sample/
+# 1) build the normal base world (seed=7, scale=1.0) and refresh data/sample/
 python scripts/generate_data.py
-# custom seed / size
-python scripts/generate_data.py --seed 42 --scale 1.5
-# validate: PASS/FAIL checks + reproducibility (regenerates into a temp dir)
+
+# 2) plant 3 fraud rings + the decoy + Ravi's FraudReport on top of the base
+python scripts/plant_fraud.py          # --seed defaults to 7
+
+# 3) validate base-data invariants (auto-adjusts for planted data)
 python scripts/validate_data.py
+
+# 4) validate the fraud answer-key invariants (rings, freeze list, decoy, etc.)
+python scripts/validate_fraud.py
 ```
 
 9 plain CSVs are written (accounts, phones, account_phone, devices,
-account_device, cashout_points, transactions, paid_edges, cashed_out_at) plus a
-`meta.json` describing the 30-day window. Output is fully reproducible from
-`(seed, scale)`. Account IDs `ACC_0461..ACC_0500` are reserved for Phase 5's
-mule + decoy accounts.
+account_device, cashout_points, transactions, paid_edges, cashed_out_at) plus
+`meta.json`, and (after planting) `fraud_reports.csv`. Output is fully
+reproducible from `(seed, scale)`. Account IDs `ACC_0461..ACC_0500` are the
+reserved Phase 5 range (mules + decoy all live here). See
+[`docs/DATA_NOTES.md`](docs/DATA_NOTES.md) for the exact planted rings + decoy,
+and beware: to regenerate with a *different* seed, delete `data/generated/base/`
+first so it is re-snapshotted.
 
 ## Quick start
 

@@ -1,6 +1,10 @@
-"""Validate the generated MuleTrace base data in data/generated/.
+"""Validate the generated MuleTrace data in data/generated/.
 
 Prints PASS/FAIL for every check and a summary; exits non-zero if any check fails.
+
+Works on the pristine base world AND on the Phase 5 merged world (base + planted
+fraud rings + decoy). When planted data is detected, row-count ranges and the
+reproducibility pipeline are adjusted automatically.
 
 Checks:
   1. row counts within expected ranges
@@ -10,7 +14,7 @@ Checks:
   5. sender never equals receiver
   6. at least 30 accounts share a device, and at least 5 rapid-forward patterns
   7. amount distribution looks reasonable (prints median, p95, max)
-  8. reproducibility: generating twice with the same seed gives identical files
+  8. reproducibility: generating (and planting, when present) twice gives identical files
 
 Usage:
     python scripts/validate_data.py
@@ -32,9 +36,10 @@ from datagen.world import load_world_from_dir, FILES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GENERATE_SCRIPT = os.path.join(REPO_ROOT, "scripts", "generate_data.py")
+PLANT_SCRIPT = os.path.join(REPO_ROOT, "scripts", "plant_fraud.py")
 PASSED = True
 
-MOVED_COLS = ("amount", "timestamp")
+MAX_BASE_ACCOUNTS = 460
 
 
 def report(step: str, ok: bool, detail: str = "") -> None:
@@ -171,20 +176,26 @@ def check_distribution(world, meta) -> None:
 # ---------------------------------------------------------------------------
 # Reproducibility
 # ---------------------------------------------------------------------------
-def check_reproducible(meta) -> None:
+def check_reproducible(dir_path, meta, planted) -> None:
     seed = meta["seed"]
     scale = meta["scale"]
     with tempfile.TemporaryDirectory() as tmp:
-        cmd = [sys.executable, GENERATE_SCRIPT, "--seed", str(seed),
-               "--scale", str(scale), "--out", tmp]
-        subprocess.run(cmd, check=True, capture_output=True, cwd=REPO_ROOT)
-        for fname in FILES + ["meta.json"]:
-            a = os.path.join(REPO_ROOT, "data", "generated", fname)
+        subprocess.run([sys.executable, GENERATE_SCRIPT, "--seed", str(seed),
+                        "--scale", str(scale), "--out", tmp],
+                       check=True, capture_output=True, cwd=REPO_ROOT)
+        if planted:
+            subprocess.run([sys.executable, PLANT_SCRIPT, "--seed", str(seed),
+                            "--out", tmp],
+                           check=True, capture_output=True, cwd=REPO_ROOT)
+        files = FILES + ["meta.json"] + (["fraud_reports.csv"] if planted else [])
+        for fname in files:
+            a = os.path.join(dir_path, fname)
             b = os.path.join(tmp, fname)
             if not _same_hash(a, b):
                 report(f"reproducible: {fname}", False, "hashes differ")
                 return
-    report("reproducible (same seed -> identical files)", True)
+    report(f"reproducible (same seed -> identical files, planted={'yes' if planted else 'no'})",
+           True)
 
 
 def _same_hash(p1, p2) -> bool:
@@ -218,21 +229,44 @@ def print_summary(world, meta) -> None:
 
 
 # ---------------------------------------------------------------------------
-def check_counts(world, meta) -> None:
+def _is_planted(dir_path) -> bool:
+    """True if the dir contains Phase 5 planted accounts (reserved range used)."""
+    path = os.path.join(dir_path, "accounts.csv")
+    if not os.path.exists(path):
+        return False
+    with open(path) as fh:
+        return sum(1 for _ in fh) - 1 > MAX_BASE_ACCOUNTS
+
+
+def check_counts(world, meta, planted) -> None:
     scale = meta["scale"]
     budget = round(5000 * scale)
     n_atm = meta["n_atm"]
-    expected = {
-        "accounts": (meta["base_accounts"] - 5, meta["base_accounts"] + 5),
-        "phones": (445, 470),
-        "account_phone": (meta["n_accounts"] - 5, meta["n_accounts"] + 5),
-        "devices": (548, 610),
-        "account_device": (580, 660),
-        "cashout_points": (20, 20),
-        "transactions": (int(budget * 0.95), int(budget * 1.05)),
-        "paid_edges": (int(budget * 0.95) - n_atm - 10, int(budget * 1.05) - n_atm + 10),
-        "cashed_out_at": (n_atm - 10, n_atm + 10),
-    }
+    if planted:
+        # Phase 0..5 merged world: base + 16 planted accounts + fraud activity.
+        expected = {
+            "accounts": (475, 478),
+            "phones": (466, 473),
+            "account_phone": (474, 479),
+            "devices": (588, 598),
+            "account_device": (629, 638),
+            "cashout_points": (20, 20),
+            "transactions": (5100, 5120),
+            "paid_edges": (5035, 5055),
+            "cashed_out_at": (62, 68),
+        }
+    else:
+        expected = {
+            "accounts": (meta["base_accounts"] - 5, meta["base_accounts"] + 5),
+            "phones": (445, 470),
+            "account_phone": (meta["n_accounts"] - 5, meta["n_accounts"] + 5),
+            "devices": (548, 610),
+            "account_device": (580, 660),
+            "cashout_points": (20, 20),
+            "transactions": (int(budget * 0.95), int(budget * 1.05)),
+            "paid_edges": (int(budget * 0.95) - n_atm - 10, int(budget * 1.05) - n_atm + 10),
+            "cashed_out_at": (n_atm - 10, n_atm + 10),
+        }
     for name in FILES:
         stem = name[:-4]
         got = len(getattr(world, stem))
@@ -249,9 +283,11 @@ def main() -> int:
 
     world = load_world_from_dir(args.dir)
     meta = world.meta
-    print(f"== validating {args.dir} (seed={meta['seed']}, scale={meta['scale']}) ==")
+    planted = _is_planted(args.dir)
+    print(f"== validating {args.dir} (seed={meta['seed']}, scale={meta['scale']}, "
+          f"planted={'yes' if planted else 'no'}) ==")
 
-    check_counts(world, meta)
+    check_counts(world, meta, planted)
     check_structure(world)
     check_time_and_amount(world, meta)
     check_paid_consistency(world)
@@ -259,7 +295,7 @@ def main() -> int:
     check_noise(world)
     check_distribution(world, meta)
     print_summary(world, meta)
-    check_reproducible(meta)
+    check_reproducible(args.dir, meta, planted)
 
     print("=" * 40)
     if PASSED:
