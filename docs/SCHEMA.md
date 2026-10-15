@@ -187,3 +187,12 @@ Range indexes (RANGE):
   in `WITH`/`RETURN`. `find_shortest_path` uses the `WITH shortestPath(...) AS p` form.
 - **No native PageRank/WCC/Louvain.** Their tools degrade gracefully to a Python
   (networkx) computation over the projected `PAID` edge set.
+- **Aggregates return floats even for integer columns.** `sum(a.balance_held)`
+  returns `87241213.0` (float), not an int. Compare with rounding/equality-aware
+  checks when asserting exact sums (see `scripts/verify_graph.py`).
+- **Cash-out transactions have no `RECEIVED_BY`.** A `channel=ATM`/`CRYPTO`
+  transaction exits the system via a `CASHED_OUT_AT` edge instead, so it legitimately
+  has zero `RECEIVED_BY`. Every inter-account transaction has exactly one.
+- **Batched `UNWIND $rows` with a list-of-maps parameter** is supported; the Phase 6
+  loader (`scripts/load_graph.py`) uses it at ~500 rows/batch. `MERGE` on node `id`,
+  on `PAID.txn_id`, and on `CASHED_OUT_AT.timestamp` makes the loader idempotent.

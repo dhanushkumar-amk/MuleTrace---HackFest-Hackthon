@@ -2,7 +2,7 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 5 — fraud rings + decoy planted on the base world.** FalkorDB loading (Phase 6) comes next.
+**Status: Phase 6 — data loaded into FalkorDB and verified.** Agent tools + logic (Phase 7) come next.
 
 ## Project summary
 
@@ -12,6 +12,8 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
 - [`docs/TOOLS.md`](docs/TOOLS.md) — the 8 agent graph tools and their JSON contracts.
 - [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) — 12 testable pass/fail checks.
 - [`docs/SCHEMA.md`](docs/SCHEMA.md) — node/relationship schema, tool mappings, Mermaid diagram.
+- [`docs/DATA_NOTES.md`](docs/DATA_NOTES.md) — the planted rings + decoy (presenter notes; the agent never reads this).
+- [`docs/BROWSER_QUERIES.md`](docs/BROWSER_QUERIES.md) — ready-to-paste FalkorDB Browser queries.
 
 ## Stack
 - **Database:** FalkorDB (Docker), graph named `muletrace`
@@ -39,6 +41,9 @@ muletrace/
 │   ├── plant_fraud.py    # Phase 5: plants rings + decoy on the base world
 │   ├── validate_data.py  # base-data PASS/FAIL checks + reproducibility
 │   ├── validate_fraud.py # Phase 5: fraud answer-key checks
+│   ├── load_graph.py     # Phase 6: batched idempotent load into FalkorDB
+│   ├── verify_graph.py   # Phase 6: verify loaded graph vs CSVs + answer key
+│   ├── graph_stats.py    # Phase 6: quick graph summary
 │   └── datagen/          # generator core (accounts, devices, transactions, cashout)
 ├── tests/
 │   └── ground_truth.json # Phase 5 answer key (rings, freeze list) - committed
@@ -67,8 +72,16 @@ python scripts/validate_data.py
 
 # 4) validate the fraud answer-key invariants (rings, freeze list, decoy, etc.)
 python scripts/validate_fraud.py
+
+# 5) load the merged data into FalkorDB (idempotent; --reset to rebuild)
+python scripts/load_graph.py --reset
+# 6) verify the loaded graph against the CSVs + answer key
+python scripts/verify_graph.py
+# 7) quick summary of the graph
+python scripts/graph_stats.py
 ```
 
+Start FalkorDB with `docker compose up -d` (Browser UI: http://localhost:3000).
 9 plain CSVs are written (accounts, phones, account_phone, devices,
 account_device, cashout_points, transactions, paid_edges, cashed_out_at) plus
 `meta.json`, and (after planting) `fraud_reports.csv`. Output is fully
