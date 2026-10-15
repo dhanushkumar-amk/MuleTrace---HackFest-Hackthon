@@ -6,3 +6,4 @@ faker
 pydantic
 httpx
 groq
+pytest

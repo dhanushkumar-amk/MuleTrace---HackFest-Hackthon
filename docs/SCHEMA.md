@@ -196,3 +196,11 @@ Range indexes (RANGE):
 - **Batched `UNWIND $rows` with a list-of-maps parameter** is supported; the Phase 6
   loader (`scripts/load_graph.py`) uses it at ~500 rows/batch. `MERGE` on node `id`,
   on `PAID.txn_id`, and on `CASHED_OUT_AT.timestamp` makes the loader idempotent.
+- **Time-ordered multi-hop `trace_money_forward` uses a Python BFS, not a single
+  variable-length Cypher query.** The single-query form with a pairwise
+  time-ordering predicate
+  (`WITH p, [r IN relationships(p) | r.timestamp] AS ts WHERE all(i IN
+  range(0,size(ts)-2) WHERE ts[i] < ts[i+1])`) is syntactically supported but
+  **times out at 6–8 hops** on this ~5k-edge connected graph. The Phase 7
+  `backend/queries.py` walks forward hop-by-hop (one `MATCH (a)-[:PAID]->(b) WHERE
+  a.id IN $ids` per level) and keeps the money-forward-in-time rule exactly.
