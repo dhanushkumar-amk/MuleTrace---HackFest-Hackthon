@@ -21,3 +21,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Generated synthetic data (regenerate with scripts/generate_data.py)
+data/generated/

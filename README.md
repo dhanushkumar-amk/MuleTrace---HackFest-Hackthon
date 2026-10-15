@@ -2,7 +2,7 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 1 — project setup only.** Graph schema, seed data, and agent logic come next.
+**Status: Phase 4 — synthetic normal-world dataset ready.** Fraud rings (Phase 5) and FalkorDB loading (Phase 6) come next.
 
 ## Project summary
 
@@ -22,7 +22,9 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
 ## Project layout
 ```
 muletrace/
-├── data/                 # local data (unused in Phase 1)
+├── data/
+│   ├── generated/        # synthetic data (gitignored, regenerate anytime)
+│   └── sample/           # committed sample (first 20 rows) of each file
 ├── backend/
 │   ├── db.py             # get_graph() -> FalkorDB graph
 │   ├── main.py           # FastAPI app, GET /health, CORS
@@ -30,12 +32,36 @@ muletrace/
 │   └── agent.py          # Phase 2
 ├── frontend/             # React + Vite app
 ├── scripts/
-│   └── check_setup.py    # verifies the full setup
+│   ├── check_setup.py    # verifies the full setup
+│   ├── create_schema.py  # creates FalkorDB indexes
+│   ├── verify_schema.py  # verifies node/edge types against the schema
+│   ├── generate_data.py  # Phase 4: builds the synthetic normal dataset
+│   ├── validate_data.py  # Phase 4: PASS/FAIL checks + reproducibility
+│   └── datagen/          # generator core (accounts, devices, transactions, cashout)
 ├── docker-compose.yml
 ├── requirements.txt
 ├── .env.example
 └── .gitignore
 ```
+
+## Synthetic dataset (Phase 4)
+
+Generate the normal (non-fraud) base world and validate it:
+
+```bash
+# generate data/generated/ (seed=7, scale=1.0) and refresh data/sample/
+python scripts/generate_data.py
+# custom seed / size
+python scripts/generate_data.py --seed 42 --scale 1.5
+# validate: PASS/FAIL checks + reproducibility (regenerates into a temp dir)
+python scripts/validate_data.py
+```
+
+9 plain CSVs are written (accounts, phones, account_phone, devices,
+account_device, cashout_points, transactions, paid_edges, cashed_out_at) plus a
+`meta.json` describing the 30-day window. Output is fully reproducible from
+`(seed, scale)`. Account IDs `ACC_0461..ACC_0500` are reserved for Phase 5's
+mule + decoy accounts.
 
 ## Quick start
 

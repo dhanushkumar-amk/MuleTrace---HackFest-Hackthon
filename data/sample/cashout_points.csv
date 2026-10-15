@@ -1,0 +1,21 @@
+id,kind,name,location
+COP_001,ATM,State Bank ATM - MG Road,Bengaluru
+COP_002,ATM,HDFC ATM - Koramangala,Bengaluru
+COP_003,ATM,ICICI ATM - Indiranagar,Bengaluru
+COP_004,ATM,Axis ATM - Whitefield,Bengaluru
+COP_005,ATM,PNB ATM - Jayanagar,Bengaluru
+COP_006,ATM,Kotak ATM - HSR Layout,Bengaluru
+COP_007,ATM,BoB ATM - Marathahalli,Bengaluru
+COP_008,ATM,Canara ATM - Malleshwaram,Bengaluru
+COP_009,ATM,Union ATM - South End,Bengaluru
+COP_010,ATM,SBI ATM - Banashankari,Bengaluru
+COP_011,ATM,HDFC ATM - Electronic City,Bengaluru
+COP_012,ATM,ICICI ATM - Yelahanka,Bengaluru
+COP_013,ATM,Axis ATM - Chruch Street,Bengaluru
+COP_014,ATM,SBI ATM - Andheri,Mumbai
+COP_015,ATM,HDFC ATM - Connaught Place,New Delhi
+COP_016,CRYPTO_EXCHANGE,Kaleido Exchange,Mumbai
+COP_017,CRYPTO_EXCHANGE,Orbit Crypto Exchange,Gurugram
+COP_018,CRYPTO_EXCHANGE,VaultX Exchange,Bengaluru
+COP_019,WALLET,DigiPay Wallet,Bengaluru
+COP_020,WALLET,SuperCoin Wallet,Pune

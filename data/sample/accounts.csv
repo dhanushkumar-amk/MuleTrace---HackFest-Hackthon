@@ -1,0 +1,21 @@
+id,holder_name,bank,account_type,opened_at,balance_held,is_flagged,risk_score
+ACC_0001,Matthew Rana,Kotak Mahindra Bank,individual,1551266625,2774,false,0
+ACC_0002,Elijah Wason,Union Bank of India,individual,1713114747,13177,false,0
+ACC_0003,Jasmit Bhardwaj,Union Bank of India,individual,1666796339,6687,false,0
+ACC_0004,Baljiwan Chadha,Yes Bank,individual,1551301155,10275,false,0
+ACC_0005,Omya Boase,HDFC Bank,individual,1634479461,23060,false,0
+ACC_0006,Gautam Samra,Yes Bank,individual,1619468373,17538,false,0
+ACC_0007,Jatin Kapoor,State Bank of India,individual,1623862194,20678,false,0
+ACC_0008,Mekhala Bawa,Canara Bank,individual,1631245847,2769,false,0
+ACC_0009,Chakradhar Deol,Axis Bank,individual,1742440142,15787,false,0
+ACC_0010,Oni Dhawan,Canara Bank,individual,1696946962,4905,false,0
+ACC_0011,Darika Golla,Kotak Mahindra Bank,individual,1726958910,48850,false,0
+ACC_0012,Raghav Pradhan,Kotak Mahindra Bank,individual,1685427108,15535,false,0
+ACC_0013,Dev Bhasin,HDFC Bank,individual,1575085232,13925,false,0
+ACC_0014,Watika Wali,State Bank of India,individual,1599104914,24855,false,0
+ACC_0015,Dipta Shroff,Canara Bank,individual,1697684767,21832,false,0
+ACC_0016,Janaki Mistry,Canara Bank,individual,1682040386,15769,false,0
+ACC_0017,Pranit Kohli,Punjab National Bank,individual,1731957687,3472,false,0
+ACC_0018,Charita Vohra,HDFC Bank,individual,1723784110,10064,false,0
+ACC_0019,Hemal Sen,Bank of Baroda,individual,1569783500,12612,false,0
+ACC_0020,Elijah Dalal,Bank of Baroda,individual,1549088721,7487,false,0
