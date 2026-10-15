@@ -2,7 +2,7 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 7 — core Cypher queries implemented and verified.** Graph algorithms (Phase 8) come next.
+**Status: Phase 8 — graph algorithms implemented and verified.** MCP / tool layer (Phase 9) comes next.
 
 ## Project summary
 
@@ -13,12 +13,13 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
 - [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) — 12 testable pass/fail checks.
 - [`docs/SCHEMA.md`](docs/SCHEMA.md) — node/relationship schema, tool mappings, Mermaid diagram.
 - [`docs/QUERIES.md`](docs/QUERIES.md) — Phase 7: core Cypher queries, parameters, example outputs and runtimes.
+- [`docs/ALGORITHMS.md`](docs/ALGORITHMS.md) — Phase 8: graph algorithms, native discovery vs NetworkX, example outputs and runtimes.
 - [`docs/DATA_NOTES.md`](docs/DATA_NOTES.md) — the planted rings + decoy (presenter notes; the agent never reads this).
 - [`docs/BROWSER_QUERIES.md`](docs/BROWSER_QUERIES.md) — ready-to-paste FalkorDB Browser queries.
 
 ## Stack
 - **Database:** FalkorDB (Docker), graph named `muletrace`
-- **Backend:** FastAPI + the `falkordb` Python client
+- **Backend:** FastAPI + the `falkordb` Python client + `networkx`
 - **LLM:** Groq (OpenAI-compatible `groq` SDK)
 - **Frontend:** React + Vite (JS), `react-force-graph-2d`
 
@@ -32,6 +33,7 @@ muletrace/
 │   ├── db.py             # get_graph() -> FalkorDB graph
 │   ├── main.py           # FastAPI app, GET /health, CORS
 │   ├── queries.py        # Phase 7: core read-only Cypher queries
+│   ├── algorithms.py     # Phase 8: graph algorithms (shortest path, PageRank, WCC, Louvain, betweenness)
 │   ├── graph_tools.py    # Phase 2
 │   └── agent.py          # Phase 2
 ├── frontend/             # React + Vite app
@@ -47,17 +49,19 @@ muletrace/
 │   ├── verify_graph.py   # Phase 6: verify loaded graph vs CSVs + answer key
 │   ├── graph_stats.py    # Phase 6: quick graph summary
 │   ├── try_queries.py    # Phase 7: CLI runner for core queries
+│   ├── try_algorithms.py # Phase 8: CLI runner for graph algorithms
 │   └── datagen/          # generator core (accounts, devices, transactions, cashout)
 ├── tests/
 │   ├── ground_truth.json # Phase 5 answer key (rings, freeze list) - committed
-│   └── test_queries.py   # Phase 7: pytest suite for core queries
+│   ├── test_queries.py   # Phase 7: pytest suite for core queries
+│   └── test_algorithms.py# Phase 8: pytest suite for graph algorithms
 ├── docker-compose.yml
 ├── requirements.txt
 ├── .env.example
 └── .gitignore
 ```
 
-## Synthetic dataset (Phases 4 + 5) & Queries (Phase 7)
+## Synthetic dataset (Phases 4 + 5) & Analysis (Phases 7 + 8)
 
 Generate the normal base world, then plant the fraud rings + decoy on top, then
 validate. Final data lands in `data/generated/` (gitignored) and the answer key in
@@ -86,11 +90,12 @@ python scripts/verify_graph.py
 # 7) quick summary of the graph
 python scripts/graph_stats.py
 
-# 8) run the Phase 7 query test suite
-python -m pytest tests/test_queries.py -v -s
+# 8) run the Phase 7 & Phase 8 test suites
+python -m pytest tests/test_queries.py tests/test_algorithms.py -v -s
 
-# 9) run the interactive query runner CLI
+# 9) run the interactive runners
 python scripts/try_queries.py
+python scripts/try_algorithms.py
 ```
 
 Start FalkorDB with `docker compose up -d` (Browser UI: http://localhost:3000).

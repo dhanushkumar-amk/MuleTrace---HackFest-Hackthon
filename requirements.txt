@@ -7,3 +7,5 @@ pydantic
 httpx
 groq
 pytest
+networkx
+scipy
