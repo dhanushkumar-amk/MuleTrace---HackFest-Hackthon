@@ -10,6 +10,7 @@ Phase 10's agent interacts with the tool layer exclusively through this class.
 """
 from __future__ import annotations
 
+import copy
 import json
 import os
 import sys
@@ -104,9 +105,15 @@ class MuleTraceMCPClient:
         groq_tools: List[Dict[str, Any]] = []
         for t in tools_data:
             schema = t.input_schema if hasattr(t, "input_schema") else getattr(t, "inputSchema", {})
-            # Ensure schema is valid JSON Schema object
+            # Ensure schema is valid JSON Schema object and strip redundant titles to save tokens
             if not isinstance(schema, dict) or schema.get("type") != "object":
                 schema = {"type": "object", "properties": {}}
+            else:
+                schema = copy.deepcopy(schema)
+                schema.pop("title", None)
+                for p_val in schema.get("properties", {}).values():
+                    if isinstance(p_val, dict):
+                        p_val.pop("title", None)
 
             groq_tools.append({
                 "type": "function",

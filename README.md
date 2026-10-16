@@ -2,7 +2,7 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 8 — graph algorithms implemented and verified.** MCP / tool layer (Phase 9) comes next.
+**Status: Phase 11 — Freeze-list ranking, decoy protection, and memory write-back (Track 02 bonus) implemented and verified.** Phase 12 (Explainability views) comes next.
 
 ## Project summary
 
@@ -96,6 +96,15 @@ python -m pytest tests/test_queries.py tests/test_algorithms.py -v -s
 # 9) run the interactive runners
 python scripts/try_queries.py
 python scripts/try_algorithms.py
+
+# 10) Phase 11: run freeze list unit tests
+python -m pytest tests/test_freeze.py -v
+
+# 11) Phase 11: run autonomous agent on Ravi's report
+python scripts/run_agent.py --report FR_0001 --save-memory
+
+# 12) Phase 11: run 5-run agent benchmark evaluation
+python scripts/eval_agent.py --runs 5
 ```
 
 Start FalkorDB with `docker compose up -d` (Browser UI: http://localhost:3000).

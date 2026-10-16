@@ -37,6 +37,11 @@ properties — they live only in a separate test file so the agent cannot cheat.
 | | `amount` | number | |
 | | `reported_at` | integer | epoch seconds |
 | | `description` | string | free text |
+| `Case` | `id` | string | e.g. `CASE_FR_0001` (Track 02 memory write-back) |
+| | `report_id` | string | link to `FraudReport.id` |
+| | `created_at` | integer | epoch seconds |
+| | `summary` | string | case resolution summary narrative |
+| | `status` | string | e.g. `completed` |
 
 ## b) Relationships
 
@@ -49,7 +54,9 @@ properties — they live only in a separate test file so the agent cannot cheat.
 | `REGISTERED_PHONE` | `(Account)-[:REGISTERED_PHONE]->(Phone)` | — | account registered phone |
 | `CASHED_OUT_AT` | `(Account)-[:CASHED_OUT_AT]->(CashOutPoint)` | `amount`, `timestamp` | cash-out / exit event |
 | `REPORTS_VICTIM` | `(FraudReport)-[:REPORTS_VICTIM]->(Account)` | — | links a report to the victim account |
-| `FLAGGED_IN` | `(Account)-[:FLAGGED_IN]->(FraudReport)` | — | written **later** by the agent; memory write-back (Track 02) |
+| `FLAGGED_IN` | `(Account)-[:FLAGGED_IN]->(FraudReport)` | `confidence`, `priority`, `amount_recoverable`, `signals`, `at` | persisted by `save_case_to_memory` (Track 02 memory write-back) |
+| `INVOLVES` | `(Case)-[:INVOLVES]->(Account)` | — | links memory case to verified candidate accounts |
+| `LINKED_TO` | `(Case)-[:LINKED_TO]->(Case)` | — | links a case to prior cases when rings overlap |
 
 ### Why keep both `Transaction` node and `PAID` edge
 The `Transaction` nodes are the **rich ledger** — they carry channel, status, and can be

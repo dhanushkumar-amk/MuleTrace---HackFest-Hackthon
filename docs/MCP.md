@@ -1,6 +1,6 @@
 # MuleTrace — Tool Layer & Model Context Protocol (MCP) Server
 
-Phase 9 establishes the tool layer and MCP integration for MuleTrace. It exposes 17 read-only graph tools (queries and algorithms) through a unified registry, supports dual transports (`stdio` and `streamable-http`), enforces token-budget compaction (~3,000 characters) for Groq free-tier compatibility, and provides structured error handling so tools never crash or raise unhandled exceptions to the LLM.
+Phase 9-11 establishes the tool layer and MCP integration for MuleTrace. It exposes 20 graph tools (17 queries/algorithms, 2 memory actions, and 1 freeze ranking action) through a unified registry, supports dual transports (`stdio` and `streamable-http`) plus in-process client bridging, enforces token-budget compaction (~3,000 characters) for Groq free-tier compatibility, and provides structured error handling so tools never crash or raise unhandled exceptions to the LLM.
 
 ---
 

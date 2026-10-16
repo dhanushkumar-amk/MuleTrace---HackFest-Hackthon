@@ -64,6 +64,9 @@ EXPECTED_TOOLS = [
     "find_communities",
     "find_connected_ring",
     "rank_chokepoints",
+    "build_freeze_list",
+    "save_case_to_memory",
+    "recall_past_cases",
 ]
 
 
@@ -79,7 +82,7 @@ def graph():
 def test_registry_has_all_expected_tools():
     tools = registry.list_tools()
     tool_names = [t.name for t in tools]
-    assert len(tool_names) == 17
+    assert len(tool_names) == 20
     for expected in EXPECTED_TOOLS:
         assert expected in tool_names
 
@@ -101,13 +104,14 @@ def test_registry_has_all_expected_tools():
         assert "properties" in schema
 
 
-def test_build_freeze_list_placeholder_exists():
+def test_build_freeze_list_active_in_registry():
     registry_file = ROOT / "backend" / "tools" / "registry.py"
     content = registry_file.read_text(encoding="utf-8")
     assert "build_freeze_list" in content
-    assert "Phase 11" in content
-    # Ensure it is not implemented as a tool in the active registry
-    assert registry.get_tool("build_freeze_list") is None
+    # In Phase 11, it is implemented as an active action tool in the registry
+    tool_def = registry.get_tool("build_freeze_list")
+    assert tool_def is not None
+    assert tool_def.kind == "action"
 
 
 # ===========================================================================
@@ -118,7 +122,7 @@ def test_groq_format_conversion():
     async def _run():
         client = MuleTraceMCPClient(mode="in-process")
         tools = await client.list_tools()
-        assert len(tools) == 17
+        assert len(tools) == 20
         for t in tools:
             assert t.get("type") == "function"
             fn = t.get("function", {})
@@ -294,7 +298,7 @@ def test_mcp_server_transports():
         # 1. Stdio transport
         async with MuleTraceMCPClient(mode="stdio") as stdio_client:
             tools_stdio = await stdio_client.list_tools()
-            assert len(tools_stdio) == 17
+            assert len(tools_stdio) == 20
             res_stdio = await stdio_client.call_tool("get_fraud_report", {"report_id": "FR_0001"})
             assert res_stdio.get("found") is True
 
@@ -308,7 +312,7 @@ def test_mcp_server_transports():
 
         async with MuleTraceMCPClient(mode="http", http_url="http://127.0.0.1:8765/mcp") as http_client:
             tools_http = await http_client.list_tools()
-            assert len(tools_http) == 17
+            assert len(tools_http) == 20
             res_http = await http_client.call_tool("get_fraud_report", {"report_id": "FR_0001"})
             assert res_http.get("found") is True
 

@@ -18,6 +18,8 @@ from pydantic import BaseModel, Field, field_validator
 from backend.db import get_graph
 from backend import queries
 from backend import algorithms
+from backend import freeze
+from backend import memory
 from backend.tools.compaction import compact_output, _serialize_len
 from backend.tools import trace
 
@@ -50,7 +52,7 @@ class TraceMoneyForwardInput(BaseModel):
     )
     start_time: int = Field(
         ...,
-        description="Epoch timestamp of initial theft or transfer to follow forward.",
+        description="Epoch timestamp of initial theft to follow forward. Note: theft occurs prior to report filing, so pass ~2 hours before reported_at (e.g. reported_at - 7200).",
     )
     max_hops: int = Field(
         default=8,
@@ -341,6 +343,63 @@ class RankChokepointsInput(BaseModel):
         ge=1,
         le=50,
         description="Number of top chokepoint accounts to return.",
+    )
+
+    @field_validator("account_ids", mode="before")
+    @classmethod
+    def _coerce_list(cls, v: Any) -> List[str]:
+        if isinstance(v, str):
+            return [v]
+        return list(v)
+
+
+class BuildFreezeListInput(BaseModel):
+    report_id: str = Field(
+        ...,
+        description="Unique ID of the filed fraud report (e.g. 'FR_0001').",
+    )
+    candidate_account_ids: List[str] = Field(
+        ...,
+        max_length=15,
+        description="List of suspect candidate account IDs (max 15) to independently verify and rank for freeze recommendation.",
+    )
+
+    @field_validator("candidate_account_ids", mode="before")
+    @classmethod
+    def _coerce_list(cls, v: Any) -> List[str]:
+        if isinstance(v, str):
+            return [v]
+        return list(v)
+
+
+class SaveCaseToMemoryInput(BaseModel):
+    report_id: str = Field(
+        ...,
+        description="Unique ID of the filed fraud report (e.g. 'FR_0001').",
+    )
+    summary: str = Field(
+        ...,
+        description="High-level factual narrative of the fraud investigation findings.",
+    )
+    account_ids: Optional[List[str]] = Field(
+        default=None,
+        description="Optional subset of accounts to save. Must appear in the last build_freeze_list result.",
+    )
+
+    @field_validator("account_ids", mode="before")
+    @classmethod
+    def _coerce_list(cls, v: Any) -> Optional[List[str]]:
+        if v is None:
+            return None
+        if isinstance(v, str):
+            return [v]
+        return list(v)
+
+
+class RecallPastCasesInput(BaseModel):
+    account_ids: List[str] = Field(
+        ...,
+        description="List of target account IDs to inspect for historical case involvement or shared device or phone connections.",
     )
 
     @field_validator("account_ids", mode="before")
@@ -664,9 +723,54 @@ register_tool(
 
 
 # ===========================================================================
-# 4. Phase 11 Action Placeholder
+# 4. Phase 11 Action and Memory Tools
 # ===========================================================================
-# PLACEHOLDER: build_freeze_list (Phase 11 action tool)
-# Reserved for ranking and assembling the final actionable freeze list from
-# traced balances and money paths.
-# DO NOT IMPLEMENT IN PHASE 9.
+
+def _handle_build_freeze_list(graph, report_id: str, candidate_account_ids: List[str]):
+    return freeze.build_freeze_list(
+        candidates=candidate_account_ids,
+        case_context=report_id,
+        graph=graph,
+    )
+
+
+def _handle_save_case_to_memory(graph, report_id: str, summary: str, account_ids: Optional[List[str]] = None):
+    return memory.save_case_to_memory(
+        graph=graph,
+        report_id=report_id,
+        summary=summary,
+        account_ids=account_ids,
+    )
+
+
+def _handle_recall_past_cases(graph, account_ids: List[str]):
+    return memory.recall_past_cases(
+        graph=graph,
+        account_ids=account_ids,
+    )
+
+
+register_tool(
+    name="build_freeze_list",
+    description="Assemble and rank a freeze recommendation for human review from verified suspect accounts. Use only after investigating the fraud report and vetting suspects with get_account_profile. Do NOT pass unexamined accounts. Independently re-verifies candidates against the graph money trail and behavioral signals; rejects decoys, accounts without valid trails, and already-emptied accounts.",
+    input_model=BuildFreezeListInput,
+    handler=_handle_build_freeze_list,
+    kind="action",
+)
+
+register_tool(
+    name="save_case_to_memory",
+    description="Persist completed investigation findings to the memory graph. Writes Case node, FLAGGED_IN links, and links to earlier cases via shared infrastructure. Only accounts approved in build_freeze_list can be saved. Use only after obtaining a freeze recommendation. Idempotent.",
+    input_model=SaveCaseToMemoryInput,
+    handler=_handle_save_case_to_memory,
+    kind="action",
+)
+
+register_tool(
+    name="recall_past_cases",
+    description="Retrieve historical fraud cases involving given accounts or their shared devices and phones. Returns earlier case dates, summaries, outcomes, and confidence levels. Use during an investigation to uncover repeat offenders, linked syndicates, or prior intelligence.",
+    input_model=RecallPastCasesInput,
+    handler=_handle_recall_past_cases,
+    kind="query",
+)
+
