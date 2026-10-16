@@ -5,12 +5,14 @@ Checks:
   (b) creates a test graph with two nodes and one edge
   (c) reads it back with a Cypher query
   (d) deletes the test graph
-  (e) checks LLM_API_KEY is set and makes one tiny LLM call (Groq)
+  (e) checks GROQ_API_KEY is set and makes one tiny LLM call (Groq)
 
 Prints PASS / FAIL for every step and exits non-zero if any step fails.
 """
 import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from dotenv import load_dotenv
 
@@ -36,7 +38,7 @@ def main() -> int:
     host = os.getenv("FALKORDB_HOST", "localhost")
     port = int(os.getenv("FALKORDB_PORT", "6379"))
     llm_provider = os.getenv("LLM_PROVIDER", "groq")
-    llm_api_key = os.getenv("LLM_API_KEY", "")
+    llm_api_key = os.getenv("GROQ_API_KEY") or os.getenv("LLM_API_KEY", "")
     llm_model = os.getenv("LLM_MODEL", "")
 
     print(f"== MuleTrace setup check (FalkorDB {host}:{port}) ==")
@@ -92,7 +94,7 @@ def main() -> int:
         report(
             "e. LLM connectivity",
             False,
-            "LLM_API_KEY is not set in .env (add your Groq key)",
+            "GROQ_API_KEY is not set in .env (add your Groq key)",
         )
     elif llm_provider != "groq":
         report(
@@ -102,16 +104,17 @@ def main() -> int:
         )
     else:
         try:
-            from groq import Groq
+            from backend.llm import get_groq_client, get_llm_model
 
-            client = Groq(api_key=llm_api_key)
+            client = get_groq_client()
+            model = llm_model or get_llm_model()
             resp = client.chat.completions.create(
-                model=llm_model or "llama-3.3-70b-versatile",
+                model=model,
                 messages=[{"role": "user", "content": "Reply with exactly: OK"}],
                 max_tokens=5,
             )
             content = (resp.choices[0].message.content or "").strip()
-            report("e. LLM connectivity", True, f"model={llm_model} reply={content!r}")
+            report("e. LLM connectivity", True, f"model={model} reply={content!r}")
         except Exception as exc:  # pragma: no cover - failure path
             report("e. LLM connectivity", False, str(exc))
 

@@ -11,8 +11,8 @@ Phase 9 establishes the tool layer and MCP integration for MuleTrace. It exposes
                            |  Phase 10 LLM Agent    |
                            +-----------+------------+
                                        |
-                               (OpenAI Function
-                                Calling Schema)
+                           (Groq Tool-Calling Format
+                                (JSON Schema))
                                        v
                            +------------------------+
                            |   MuleTraceMCPClient   |
@@ -89,7 +89,7 @@ from backend.mcp_client import MuleTraceMCPClient
 
 async def run():
     client = MuleTraceMCPClient(mode="in-process")
-    # Discover tools in OpenAI function format
+    # Discover tools in Groq tool-calling format (JSON schema)
     tools = await client.list_tools()
     
     # Execute a tool

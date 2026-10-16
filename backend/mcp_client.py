@@ -3,7 +3,7 @@
 Async client class that connects to the MuleTrace MCP server (in-process, stdio,
 or streamable HTTP, selectable via env var MCP_MODE).
 Exposes:
-- list_tools(): converts MCP tools into OpenAI/Groq function-calling schema.
+- list_tools(): converts MCP tools into Groq tool-calling format (JSON schema).
 - call_tool(name, arguments): calls a tool by name and returns parsed JSON dict.
 
 Phase 10's agent interacts with the tool layer exclusively through this class.
@@ -36,7 +36,7 @@ class MuleTraceMCPClient:
         self.http_url = http_url
         self._exit_stack: Optional[AsyncExitStack] = None
         self._session: Optional[ClientSession] = None
-        self._cached_openai_tools: Optional[List[Dict[str, Any]]] = None
+        self._cached_groq_tools: Optional[List[Dict[str, Any]]] = None
 
     async def connect(self) -> "MuleTraceMCPClient":
         """Establish connection to the MCP server based on configured transport mode."""
@@ -88,9 +88,9 @@ class MuleTraceMCPClient:
         await self.close()
 
     async def list_tools(self) -> List[Dict[str, Any]]:
-        """List registered tools converted to OpenAI-style function-calling format for Groq."""
-        if self._cached_openai_tools is not None:
-            return self._cached_openai_tools
+        """List registered tools converted to Groq tool-calling format (JSON schema)."""
+        if self._cached_groq_tools is not None:
+            return self._cached_groq_tools
 
         if self.mode == "in-process":
             tools_data = await in_process_server.list_tools()
@@ -101,14 +101,14 @@ class MuleTraceMCPClient:
             response = await self._session.list_tools()
             tools_data = response.tools
 
-        openai_tools: List[Dict[str, Any]] = []
+        groq_tools: List[Dict[str, Any]] = []
         for t in tools_data:
             schema = t.input_schema if hasattr(t, "input_schema") else getattr(t, "inputSchema", {})
             # Ensure schema is valid JSON Schema object
             if not isinstance(schema, dict) or schema.get("type") != "object":
                 schema = {"type": "object", "properties": {}}
 
-            openai_tools.append({
+            groq_tools.append({
                 "type": "function",
                 "function": {
                     "name": t.name,
@@ -117,8 +117,8 @@ class MuleTraceMCPClient:
                 },
             })
 
-        self._cached_openai_tools = openai_tools
-        return openai_tools
+        self._cached_groq_tools = groq_tools
+        return groq_tools
 
     async def call_tool(self, name: str, arguments: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Invoke a tool by name with arguments and return the parsed result dict."""

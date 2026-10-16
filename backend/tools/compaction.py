@@ -47,7 +47,10 @@ def compact_output(result: Any, max_chars: int = DEFAULT_MAX_CHARS) -> Dict[str,
     data = copy.deepcopy(result)
     is_truncated = False
 
-    candidate_keys = ["items", "paths", "nodes", "edges", "events", "splits", "ranks", "components", "communities", "members"]
+    candidate_keys = [
+        "items", "paths", "nodes", "edges", "events", "splits", "ranks",
+        "components", "communities", "members", "component", "community", "shared_links"
+    ]
 
     # 1. Trim wrapped containers: {"truncated": bool, "total": int, "items": list}
     for k, v in list(data.items()):

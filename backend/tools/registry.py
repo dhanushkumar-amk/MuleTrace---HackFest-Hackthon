@@ -397,7 +397,7 @@ class ToolDefinition:
     def get_json_schema(self) -> Dict[str, Any]:
         """Return the JSON schema representation of the tool parameters."""
         schema = self.input_model.model_json_schema()
-        # Clean schema title to match standard OpenAI / MCP parameters conventions
+        # Clean schema title to match standard Groq tool-calling / MCP parameters conventions
         schema["title"] = f"{self.name}Arguments"
         return schema
 
@@ -616,7 +616,7 @@ register_tool(
 
 register_tool(
     name="find_shortest_path",
-    description="Find the shortest money transfer path or hybrid device/phone path between two accounts. Use to verify if and how two suspects are connected. Do not use without both source and destination accounts. Proves network reachability, but cannot prove temporal causality of specific stolen amounts.",
+    description="Find the shortest money transfer path or hybrid device or phone path between two accounts. Use to verify if and how two suspects are connected. Do not use without both source and destination accounts. Proves network reachability, but cannot prove temporal causality of specific stolen amounts.",
     input_model=FindShortestPathInput,
     handler=algorithms.find_shortest_path,
     kind="algorithm",

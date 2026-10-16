@@ -20,7 +20,7 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
 ## Stack
 - **Database:** FalkorDB (Docker), graph named `muletrace`
 - **Backend:** FastAPI + the `falkordb` Python client + `networkx`
-- **LLM:** Groq (OpenAI-compatible `groq` SDK)
+- **LLM:** Groq (`groq` Python SDK)
 - **Frontend:** React + Vite (JS), `react-force-graph-2d`
 
 ## Project layout
@@ -136,7 +136,7 @@ pip install -r requirements.txt
 # copy the template (already done; add your key to .env)
 copy .env.example .env   # Windows
 # cp .env.example .env   # macOS / Linux
-# then set LLM_API_KEY=<your Groq key> in .env
+# then set GROQ_API_KEY=<your Groq key> in .env
 ```
 
 ### 4. Verify the setup
@@ -166,5 +166,5 @@ npm run dev
 | `FALKORDB_PORT` | `6379` | FalkorDB port |
 | `GRAPH_NAME` | `muletrace` | FalkorDB graph name |
 | `LLM_PROVIDER` | `groq` | LLM provider |
-| `LLM_API_KEY` | *(empty)* | Groq API key |
+| `GROQ_API_KEY` | *(empty)* | Groq API key |
 | `LLM_MODEL` | `llama-3.3-70b-versatile` | LLM model |

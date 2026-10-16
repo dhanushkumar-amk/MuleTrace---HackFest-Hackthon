@@ -1,7 +1,7 @@
 # MuleTrace — Agent Graph Tools
 
 The agent chooses its own tools at each step. There is **no hardcoded sequence** — the
-LLM decides which tool fits the current question and calls it through MCP. All tools
+LLM decides which tool fits the current question and calls it through MCP using Groq tool-calling format (JSON schema). All tools
 take JSON input and return JSON.
 
 ## Tools

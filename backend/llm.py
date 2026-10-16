@@ -1,6 +1,6 @@
 """LLM client and compaction utilities for MuleTrace.
 
-Provides Groq LLM integration with automatic fallback across available models,
+Provides Groq LLM integration supporting Groq tool-calling format (JSON schema),
 and exports the compact_output helper for bounding output tokens.
 """
 from __future__ import annotations
@@ -17,15 +17,15 @@ load_dotenv()
 
 def get_llm_api_key() -> str:
     """Retrieve Groq API key from environment."""
-    key = os.getenv("LLM_API_KEY") or os.getenv("GROQ_API_KEY")
+    key = os.getenv("GROQ_API_KEY") or os.getenv("LLM_API_KEY")
     if not key:
-        raise ValueError("Neither LLM_API_KEY nor GROQ_API_KEY is configured in .env")
+        raise ValueError("GROQ_API_KEY is not configured in .env")
     return key
 
 
 def get_llm_model() -> str:
     """Retrieve configured LLM model name with sensible default."""
-    return os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
+    return os.getenv("LLM_MODEL", "qwen/qwen3.8-27b")
 
 
 def get_groq_client() -> Groq:
