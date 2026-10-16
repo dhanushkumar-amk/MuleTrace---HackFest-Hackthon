@@ -4,12 +4,12 @@ Every function takes a FalkorDB Graph (from `backend.db.get_graph()`), uses
 parameterized Cypher (never string-concatenated values), and returns
 JSON-serializable dicts. Results are always capped and annotated with
 `{"truncated": bool, "total": N}` so the agent never receives unbounded output.
-This module never reads tests/, docs/, or tests/ground_truth.json.
+This module never reads test data, documentation files, or answer keys.
 
 Time-ordered path walking (`trace_money_forward`) uses a hop-by-hop BFS in Python
 instead of a single variable-length Cypher query: the single-query form with a
 pairwise time-ordering predicate times out on this ~5k-edge graph (see
-docs/SCHEMA.md).
+the schema documentation).
 """
 from __future__ import annotations
 

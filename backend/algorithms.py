@@ -4,7 +4,7 @@ Exposes plain Python functions that analyze connectivity, centrality, and
 community structures over the FalkorDB payment and device graph.
 Functions take a graph (from backend/db.get_graph()) plus parameters, use
 parameterized Cypher queries, return JSON-serializable dicts, and never read
-tests/, docs/, or ground_truth.json.
+test datasets, documentation files, or ground truth files.
 
 Output lists are capped and include {"truncated": bool, "total": N}.
 Subgraphs are projected into NetworkX with in-memory TTL caching for fast repeated calls.
