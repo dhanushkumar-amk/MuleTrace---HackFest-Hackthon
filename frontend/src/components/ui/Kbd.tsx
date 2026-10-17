@@ -9,7 +9,7 @@ export const Kbd: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   return (
     <kbd
       className={cn(
-        'inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-400 bg-white/5 border border-white/10 rounded shadow-xs select-none',
+        'inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-500 bg-slate-100 border border-slate-200 rounded shadow-2xs select-none',
         className
       )}
       {...props}

@@ -11,19 +11,15 @@ import { NewInvestigationModal } from './NewInvestigationModal';
 import { VerifiedBadge } from '@/components/ui/VerifiedBadge';
 import { CopyButton } from '@/components/ui/CopyButton';
 import { Button } from '@/components/ui/Button';
-import { formatRupees, formatExactIST, formatRelativeTime } from '@/lib/formatters';
+import { formatRupees, formatExactIST } from '@/lib/formatters';
 import {
   Sparkles,
   Download,
   Printer,
   Share2,
-  AlertTriangle,
-  Play,
-  Film,
-  Zap,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { CaseExplanation, HighlightGraph, FraudReport } from '@/api/types';
+import { CaseExplanation, HighlightGraph } from '@/api/types';
 
 export const WorkspacePage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,7 +53,6 @@ export const WorkspacePage: React.FC = () => {
     queryKey: ['caseExplanation', sessionId],
     queryFn: async () => {
       if (!sessionId) throw new Error('No session');
-      // If demo_ravi_run or session exists
       try {
         const res = await api.getInvestigationStatus(sessionId);
         if (res.case) return res.case;
@@ -83,7 +78,6 @@ export const WorkspacePage: React.FC = () => {
     activeThought,
     isStreaming,
     isDone,
-    error: streamError,
   } = useInvestigationStream({
     sessionId,
     enabled: !!sessionId,
@@ -106,11 +100,8 @@ export const WorkspacePage: React.FC = () => {
     saveMemory: boolean;
     speed: number;
   }) => {
-    setModalOpen(false);
-    setInvestigationMode(mode);
-
     try {
-      toast.info(`Launching ${mode === 'replay' ? 'recorded demo' : 'live agent'} investigation...`);
+      setInvestigationMode(mode);
       const resp = await api.startInvestigation({
         report_id: reportId,
         mode,
@@ -192,18 +183,18 @@ export const WorkspacePage: React.FC = () => {
   const reportedAt = header?.reported_at || 1792044900;
 
   return (
-    <div className="h-full flex flex-col bg-[#090d16] text-slate-100 overflow-hidden">
+    <div className="h-full flex flex-col bg-slate-50 text-slate-900 overflow-hidden">
       {/* Top Header Summary Strip */}
-      <div className="h-14 border-b border-white/10 bg-[#0e1526] px-4 sm:px-6 flex items-center justify-between shrink-0 select-none">
+      <div className="h-14 border-b border-slate-200 bg-white px-4 sm:px-6 flex items-center justify-between shrink-0 select-none shadow-2xs">
         <div className="flex items-center gap-3 sm:gap-6 overflow-hidden">
           {/* Victim Dossier Chip */}
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0" />
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0" />
             <div className="flex flex-col">
-              <span className="text-xs font-semibold text-slate-200 leading-tight">
+              <span className="text-xs font-semibold text-slate-900 leading-tight">
                 Victim: {victimName} ({victimAccount})
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">
+              <span className="text-[10px] text-slate-500 font-mono">
                 Stolen: {formatRupees(stolenAmount)} • {formatExactIST(reportedAt)}
               </span>
             </div>
@@ -227,7 +218,7 @@ export const WorkspacePage: React.FC = () => {
           />
 
           <Button
-            variant="outline"
+            variant="secondary"
             size="sm"
             onClick={handleDownloadMarkdown}
             leftIcon={<Download className="w-3.5 h-3.5" />}
@@ -237,7 +228,7 @@ export const WorkspacePage: React.FC = () => {
           </Button>
 
           <Button
-            variant="outline"
+            variant="secondary"
             size="sm"
             onClick={handlePrint}
             leftIcon={<Printer className="w-3.5 h-3.5" />}
@@ -247,7 +238,7 @@ export const WorkspacePage: React.FC = () => {
           </Button>
 
           <Button
-            variant="outline"
+            variant="secondary"
             size="icon"
             onClick={handleShare}
             aria-label="Share case link"
@@ -269,7 +260,7 @@ export const WorkspacePage: React.FC = () => {
       {/* Three-Pane Layout */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-0 overflow-hidden">
         {/* LEFT PANE: Agent Activity Timeline (3 cols) */}
-        <div className="lg:col-span-3 h-full overflow-hidden border-b lg:border-b-0 border-white/10">
+        <div className="lg:col-span-3 h-full overflow-hidden border-b lg:border-b-0 border-r border-slate-200 bg-white">
           <TimelinePanel
             events={events}
             activeTool={activeTool}
@@ -281,7 +272,7 @@ export const WorkspacePage: React.FC = () => {
         </div>
 
         {/* CENTER PANE: Graph Canvas (6 cols) */}
-        <div className="lg:col-span-6 h-full overflow-hidden relative">
+        <div className="lg:col-span-6 h-full overflow-hidden relative bg-slate-50">
           <GraphCanvas
             data={highlightData || caseData?.highlight || null}
             hoveredAccountId={hoveredAccountId}
@@ -292,7 +283,7 @@ export const WorkspacePage: React.FC = () => {
         </div>
 
         {/* RIGHT PANE: Recommendation Tabs (3 cols) */}
-        <div className="lg:col-span-3 h-full overflow-hidden">
+        <div className="lg:col-span-3 h-full overflow-hidden border-l border-slate-200 bg-white">
           <RecommendationPanel
             caseData={caseData || null}
             onHoverAccount={setHoveredAccountId}

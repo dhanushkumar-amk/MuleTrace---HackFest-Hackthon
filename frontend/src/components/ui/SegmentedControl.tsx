@@ -26,7 +26,7 @@ export function SegmentedControl<T extends string = string>({
     <div
       role="radiogroup"
       className={cn(
-        'inline-flex items-center p-1 rounded-xl bg-white/5 border border-white/10 select-none',
+        'inline-flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200/80 select-none',
         className
       )}
     >
@@ -43,8 +43,8 @@ export function SegmentedControl<T extends string = string>({
               'inline-flex items-center justify-center gap-1.5 font-medium rounded-lg transition-all duration-150 cursor-pointer select-none',
               size === 'sm' ? 'px-2.5 py-1 text-xs' : 'px-3 py-1.5 text-sm',
               isActive
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                ? 'bg-white text-slate-900 shadow-2xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
             )}
           >
             {opt.icon && <span className="shrink-0">{opt.icon}</span>}

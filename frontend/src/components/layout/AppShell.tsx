@@ -35,7 +35,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-row">
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-row">
         {/* Sidebar (hidden in presenter mode) */}
         {!presenterMode && <Sidebar />}
 
@@ -48,7 +48,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             />
           )}
 
-          <main className="flex-1 overflow-y-auto min-w-0 relative">
+          <main className="flex-1 overflow-y-auto min-w-0 relative bg-slate-50">
             {children}
           </main>
         </div>
@@ -58,9 +58,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <button
             onClick={() => setPresenterMode(false)}
             aria-label="Exit Presenter Mode"
-            className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 text-amber-400 border border-amber-500/30 text-xs font-semibold shadow-2xl backdrop-blur-md hover:bg-slate-800 transition-all cursor-pointer active:scale-95"
+            className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-slate-800 border border-slate-200 text-xs font-semibold shadow-xl hover:bg-slate-50 transition-all cursor-pointer active:scale-95"
           >
-            <Minimize2 className="w-3.5 h-3.5" />
+            <Minimize2 className="w-3.5 h-3.5 text-amber-600" />
             <span>Exit Presenter Mode (P)</span>
           </button>
         )}
@@ -68,12 +68,13 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         <CommandPalette />
         <Toaster
           position="bottom-right"
-          theme="dark"
+          theme="light"
           toastOptions={{
             style: {
-              background: '#141c30',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: '#f8fafc',
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              color: '#0f172a',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.08)',
             },
           }}
         />

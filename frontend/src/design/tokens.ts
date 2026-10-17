@@ -1,57 +1,58 @@
 /**
  * MuleTrace Design System Tokens
  * Strict semantic color mappings, typography, radii, elevations, and motion curves.
+ * Optimized for pristine, high-contrast, modern Light Theme.
  */
 
 export const SEMANTIC_COLORS = {
   // Graph, badge, chip, and table role mapping (strict single source of truth)
   victim: {
-    color: '#3b82f6', // blue-500
-    bg: 'rgba(59, 130, 246, 0.12)',
-    border: 'rgba(59, 130, 246, 0.28)',
-    text: '#60a5fa',
+    color: '#2563eb', // blue-600
+    bg: '#eff6ff',    // blue-50
+    border: '#bfdbfe', // blue-200
+    text: '#1d4ed8',   // blue-700
     label: 'Victim',
   },
   mule_recommended: {
-    color: '#f43f5e', // rose-500
-    bg: 'rgba(244, 63, 94, 0.12)',
-    border: 'rgba(244, 63, 94, 0.28)',
-    text: '#fb7185',
+    color: '#dc2626', // red-600
+    bg: '#fef2f2',    // red-50
+    border: '#fecaca', // red-200
+    text: '#b91c1c',   // red-700
     label: 'Freeze Recommended',
   },
   cash_out: {
-    color: '#f59e0b', // amber-500
-    bg: 'rgba(245, 158, 11, 0.12)',
-    border: 'rgba(245, 158, 11, 0.28)',
-    text: '#fbbf24',
+    color: '#d97706', // amber-600
+    bg: '#fffbeb',    // amber-50
+    border: '#fde68a', // amber-200
+    text: '#b45309',   // amber-700
     label: 'Cash-out Point',
   },
   cleared: {
-    color: '#10b981', // emerald-500
-    bg: 'rgba(16, 185, 129, 0.12)',
-    border: 'rgba(16, 185, 129, 0.28)',
-    text: '#34d399',
+    color: '#059669', // emerald-600
+    bg: '#ecfdf5',    // emerald-50
+    border: '#a7f3d0', // emerald-200
+    text: '#047857',   // emerald-700
     label: 'Cleared Decoy',
   },
   linked_ring: {
-    color: '#8b5cf6', // violet-500
-    bg: 'rgba(139, 92, 246, 0.12)',
-    border: 'rgba(139, 92, 246, 0.28)',
-    text: '#a78bfa',
+    color: '#7c3aed', // violet-600
+    bg: '#f5f3ff',    // violet-50
+    border: '#ddd6fe', // violet-200
+    text: '#6d28d9',   // violet-700
     label: 'Linked Ring',
   },
   shared_device: {
-    color: '#06b6d4', // cyan-500
-    bg: 'rgba(6, 182, 212, 0.12)',
-    border: 'rgba(6, 182, 212, 0.28)',
-    text: '#22d3ee',
+    color: '#0891b2', // cyan-600
+    bg: '#ecfeff',    // cyan-50
+    border: '#a5f3fc', // cyan-200
+    text: '#0e7490',   // cyan-700
     label: 'Shared Device',
   },
   neutral: {
     color: '#64748b', // slate-500
-    bg: 'rgba(100, 116, 139, 0.12)',
-    border: 'rgba(100, 116, 139, 0.28)',
-    text: '#94a3b8',
+    bg: '#f8fafc',    // slate-50
+    border: '#e2e8f0', // slate-200
+    text: '#334155',   // slate-700
     label: 'Pass-through',
   },
 } as const;

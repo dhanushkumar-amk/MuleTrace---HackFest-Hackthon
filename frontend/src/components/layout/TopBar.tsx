@@ -2,15 +2,12 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Search,
-  Moon,
-  Sun,
   Maximize2,
   Minimize2,
   Play,
   Film,
   Zap,
 } from 'lucide-react';
-import { useThemeStore } from '@/lib/theme';
 import { Button } from '@/components/ui/Button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/Tooltip';
 import { Kbd } from '@/components/ui/Kbd';
@@ -28,7 +25,6 @@ export const TopBar: React.FC<TopBarProps> = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useThemeStore();
 
   const getBreadcrumb = () => {
     switch (location.pathname) {
@@ -50,12 +46,12 @@ export const TopBar: React.FC<TopBarProps> = ({
   };
 
   return (
-    <header className="h-14 border-b border-white/10 bg-[#090d16]/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 select-none">
+    <header className="h-14 border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 select-none">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs sm:text-sm font-medium">
-        <span className="text-slate-400">MuleTrace</span>
-        <span className="text-slate-400">/</span>
-        <span className="text-slate-100 font-semibold">{getBreadcrumb()}</span>
+        <span className="text-slate-500">MuleTrace</span>
+        <span className="text-slate-300">/</span>
+        <span className="text-slate-900 font-semibold">{getBreadcrumb()}</span>
       </div>
 
       {/* Right Controls */}
@@ -70,7 +66,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             });
             document.dispatchEvent(event);
           }}
-          className="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 transition-colors cursor-pointer"
+          className="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-slate-700 transition-colors cursor-pointer"
         >
           <Search className="w-3.5 h-3.5 text-slate-400" />
           <span>Quick actions</span>
@@ -83,15 +79,15 @@ export const TopBar: React.FC<TopBarProps> = ({
         {/* Mode Pill (Always Honest: Live vs Recorded) */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border select-none cursor-help bg-indigo-500/10 text-indigo-300 border-indigo-500/25">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border select-none cursor-help bg-indigo-50 text-indigo-700 border-indigo-200 shadow-2xs">
               {investigationMode === 'replay' ? (
                 <>
-                  <Film className="w-3 h-3 text-cyan-400" />
+                  <Film className="w-3 h-3 text-indigo-600" />
                   <span>Recorded Run</span>
                 </>
               ) : (
                 <>
-                  <Zap className="w-3 h-3 text-emerald-400" />
+                  <Zap className="w-3 h-3 text-emerald-600" />
                   <span>Live Agent</span>
                 </>
               )}
@@ -108,34 +104,17 @@ export const TopBar: React.FC<TopBarProps> = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant="outline"
+              variant="secondary"
               size="icon"
               onClick={onTogglePresenter}
               aria-label={presenterMode ? 'Exit presenter mode' : 'Enter presenter mode'}
               className="hidden sm:inline-flex"
             >
-              {presenterMode ? <Minimize2 className="w-4 h-4 text-amber-400" /> : <Maximize2 className="w-4 h-4" />}
+              {presenterMode ? <Minimize2 className="w-4 h-4 text-amber-600" /> : <Maximize2 className="w-4 h-4 text-slate-600" />}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
             Presenter Mode <Kbd className="ml-1">P</Kbd>
-          </TooltipContent>
-        </Tooltip>
-
-        {/* Theme Toggle */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={toggleTheme}
-              aria-label="Toggle dark/light theme"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            Toggle {theme === 'dark' ? 'Light' : 'Dark'} Theme
           </TooltipContent>
         </Tooltip>
 

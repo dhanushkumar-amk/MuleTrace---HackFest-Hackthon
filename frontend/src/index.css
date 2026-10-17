@@ -10,72 +10,38 @@
     --bg-surface: #ffffff;
     --bg-subtle: #f1f5f9;
     --bg-elevated: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-card: #ffffff;
 
-    --border-subtle: rgba(148, 163, 184, 0.18);
-    --border-default: rgba(148, 163, 184, 0.32);
-    --border-hover: rgba(99, 102, 241, 0.45);
-    --border-focus: #6366f1;
+    --border-subtle: #e2e8f0;
+    --border-default: #cbd5e1;
+    --border-hover: #94a3b8;
+    --border-focus: #4f46e5;
 
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --text-muted: #94a3b8;
-    --text-inverse: #f8fafc;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
 
     --accent: #4f46e5;
-    --accent-glow: rgba(79, 70, 229, 0.15);
+    --accent-glow: rgba(79, 70, 229, 0.12);
     --accent-hover: #4338ca;
 
     --color-victim: #2563eb;
-    --color-freeze: #e11d48;
+    --color-freeze: #dc2626;
     --color-cashout: #d97706;
     --color-cleared: #059669;
     --color-ring: #7c3aed;
     --color-device: #0891b2;
     --color-neutral: #64748b;
 
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
 
-    --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
-    --shadow-glow: 0 0 24px -4px rgba(79, 70, 229, 0.18);
-  }
-
-  .dark {
-    --bg-base: #090d16;
-    --bg-surface: #0e1526;
-    --bg-subtle: #141c30;
-    --bg-elevated: #18223c;
-    --bg-card: rgba(14, 21, 38, 0.85);
-
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-default: rgba(255, 255, 255, 0.14);
-    --border-hover: rgba(99, 102, 241, 0.5);
-    --border-focus: #6366f1;
-
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
-    --text-inverse: #090d16;
-
-    --accent: #6366f1;
-    --accent-glow: rgba(99, 102, 241, 0.25);
-    --accent-hover: #818cf8;
-
-    --color-victim: #3b82f6;
-    --color-freeze: #f43f5e;
-    --color-cashout: #f59e0b;
-    --color-cleared: #10b981;
-    --color-ring: #8b5cf6;
-    --color-device: #06b6d4;
-    --color-neutral: #64748b;
-
-    --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
-    --shadow-glow: 0 0 32px -4px rgba(99, 102, 241, 0.3);
+    --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+    --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   }
 
   body {
@@ -101,67 +67,36 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-default);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: #94a3b8;
 }
 
-/* Glass panel effect */
-.glass-panel {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-}
-
-/* Shimmer animation for agent thinking state */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.03) 25%,
-    rgba(99, 102, 241, 0.15) 50%,
-    rgba(255, 255, 255, 0.03) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite ease-in-out;
-}
-
-/* Radar pulse animation for active node */
-@keyframes radar-pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
-  }
-}
-
-.radar-pulse {
-  animation: radar-pulse 2s infinite;
-}
-
-/* Subtle dot grid for graph background */
+/* Graph Canvas Dot-Grid (Light Mode) */
 .dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-color: #f8fafc;
+  background-image: radial-gradient(circle at 1px 1px, #cbd5e1 1px, transparent 0);
   background-size: 24px 24px;
 }
-.light .dot-grid {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+
+/* Print Styles for Bank Compliance Officers */
+@media print {
+  aside,
+  header,
+  .no-print,
+  button {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  main {
+    overflow: visible !important;
+    height: auto !important;
+  }
 }

@@ -24,29 +24,29 @@ export const Stat: React.FC<StatProps> = ({
   return (
     <div
       className={cn(
-        'p-3.5 sm:p-4 rounded-xl border border-white/10 bg-[#0e1526]/80 flex flex-col justify-between transition-all duration-200',
+        'p-3.5 sm:p-4 rounded-xl border border-slate-200/80 bg-white shadow-xs flex flex-col justify-between transition-all duration-200 hover:border-slate-300',
         className
       )}
       style={
         semantic
           ? {
               borderColor: semantic.border,
-              background: `linear-gradient(135deg, ${semantic.bg} 0%, rgba(14, 21, 38, 0.8) 100%)`,
+              background: `linear-gradient(135deg, ${semantic.bg} 0%, #ffffff 100%)`,
             }
           : undefined
       }
       {...props}
     >
       <div className="flex items-center justify-between gap-2 mb-1.5">
-        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+        <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
           {label}
         </span>
         {icon && (
           <span
             className="p-1.5 rounded-lg shrink-0"
             style={{
-              backgroundColor: semantic ? semantic.bg : 'rgba(255, 255, 255, 0.05)',
-              color: semantic ? semantic.color : '#94a3b8',
+              backgroundColor: semantic ? semantic.bg : '#f1f5f9',
+              color: semantic ? semantic.color : '#475569',
             }}
           >
             {icon}
@@ -55,13 +55,13 @@ export const Stat: React.FC<StatProps> = ({
       </div>
       <div>
         <div
-          className="text-xl sm:text-2xl font-bold tracking-tight tabular-nums text-slate-100"
-          style={semantic ? { color: semantic.color } : undefined}
+          className="text-xl sm:text-2xl font-bold tracking-tight tabular-nums text-slate-900"
+          style={semantic ? { color: semantic.text } : undefined}
         >
           {value}
         </div>
         {subvalue && (
-          <div className="text-xs text-slate-400 mt-1 flex items-center gap-1 font-normal">
+          <div className="text-xs text-slate-500 mt-0.5 font-normal">
             {subvalue}
           </div>
         )}
