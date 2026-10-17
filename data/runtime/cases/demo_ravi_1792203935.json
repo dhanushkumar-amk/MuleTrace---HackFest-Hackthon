@@ -1,0 +1,295 @@
+{
+  "case_header": {
+    "case_id": "CASE_FR_0001",
+    "session_id": "demo_ravi_1792203935",
+    "report_id": "FR_0001",
+    "victim_name": "Ravi Kumar",
+    "victim_account": "ACC_0461",
+    "amount_stolen": 85000,
+    "reported_at": 1792044900,
+    "total_recoverable": 0,
+    "total_cashed_out": 0,
+    "recommendation_only": true
+  },
+  "timeline": [
+    {
+      "step": 1,
+      "call_id": "call_001",
+      "tool": "get_fraud_report",
+      "purpose": "Load fraud report details to identify victim, reported stolen amount, and timestamp",
+      "key_result": "Loaded fraud report FR_0001 successfully",
+      "duration_ms": 6.81,
+      "duration": "6.8 ms",
+      "ok": true
+    },
+    {
+      "step": 2,
+      "call_id": "call_002",
+      "tool": "trace_money_forward",
+      "purpose": "Trace time-ordered money flows downstream from victim account across hops",
+      "key_result": "Traced money trail forward from ACC_0461 across up to 8 hops",
+      "duration_ms": 9.62,
+      "duration": "9.6 ms",
+      "ok": true
+    },
+    {
+      "step": 3,
+      "call_id": "call_003",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0462",
+      "duration_ms": 14.66,
+      "duration": "14.7 ms",
+      "ok": true
+    },
+    {
+      "step": 4,
+      "call_id": "call_004",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0463",
+      "duration_ms": 14.19,
+      "duration": "14.2 ms",
+      "ok": true
+    },
+    {
+      "step": 5,
+      "call_id": "call_005",
+      "tool": "trace_money_forward",
+      "purpose": "Trace time-ordered money flows downstream from victim account across hops",
+      "key_result": "Traced money trail forward from ACC_0461 across up to 5 hops",
+      "duration_ms": 9.03,
+      "duration": "9.0 ms",
+      "ok": true
+    },
+    {
+      "step": 6,
+      "call_id": "call_006",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0462",
+      "duration_ms": 14.95,
+      "duration": "14.9 ms",
+      "ok": true
+    },
+    {
+      "step": 7,
+      "call_id": "call_007",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0463",
+      "duration_ms": 15.0,
+      "duration": "15.0 ms",
+      "ok": true
+    },
+    {
+      "step": 8,
+      "call_id": "call_008",
+      "tool": "trace_money_forward",
+      "purpose": "Trace time-ordered money flows downstream from victim account across hops",
+      "key_result": "Traced money trail forward from ACC_0461 across up to 8 hops",
+      "duration_ms": 8.58,
+      "duration": "8.6 ms",
+      "ok": true
+    },
+    {
+      "step": 9,
+      "call_id": "call_009",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0464",
+      "duration_ms": 14.5,
+      "duration": "14.5 ms",
+      "ok": true
+    },
+    {
+      "step": 10,
+      "call_id": "call_010",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0465",
+      "duration_ms": 14.68,
+      "duration": "14.7 ms",
+      "ok": true
+    },
+    {
+      "step": 11,
+      "call_id": "call_011",
+      "tool": "trace_money_forward",
+      "purpose": "Trace time-ordered money flows downstream from victim account across hops",
+      "key_result": "Traced money trail forward from ACC_0461 across up to 8 hops",
+      "duration_ms": 8.76,
+      "duration": "8.8 ms",
+      "ok": true
+    },
+    {
+      "step": 12,
+      "call_id": "call_012",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0466",
+      "duration_ms": 14.98,
+      "duration": "15.0 ms",
+      "ok": true
+    },
+    {
+      "step": 13,
+      "call_id": "call_013",
+      "tool": "find_cash_out_points",
+      "purpose": "Identify terminal ATM or branch cash withdrawals along the money trail",
+      "key_result": "Scanned 5 candidate accounts for downstream cash-out points",
+      "duration_ms": 5.54,
+      "duration": "5.5 ms",
+      "ok": true
+    },
+    {
+      "step": 14,
+      "call_id": "call_014",
+      "tool": "trace_money_forward",
+      "purpose": "Trace time-ordered money flows downstream from victim account across hops",
+      "key_result": "Traced money trail forward from ACC_0461 across up to 4 hops",
+      "duration_ms": 7.81,
+      "duration": "7.8 ms",
+      "ok": true
+    },
+    {
+      "step": 15,
+      "call_id": "call_015",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0476",
+      "duration_ms": 15.35,
+      "duration": "15.3 ms",
+      "ok": true
+    }
+  ],
+  "highlight": {
+    "nodes": [
+      {
+        "id": "ACC_0461",
+        "role": "victim",
+        "label": "Victim: Ravi Kumar"
+      }
+    ],
+    "edges": [],
+    "legend": {
+      "victim": "Victim account where stolen funds originated",
+      "mule_recommended": "Verified mule account recommended for human freeze review",
+      "cash_out": "Terminal cash extraction point (ATM withdrawal or external exit)",
+      "cleared": "Cleared legitimate merchant (decoy protected from false-positive freezing)",
+      "linked_ring": "Discovered account in linked un-reported syndicate ring",
+      "shared_device": "Hardware device co-used across multiple suspect accounts",
+      "other": "Pass-through account in transaction flow"
+    },
+    "disclaimer": "recommendation for human review, nothing was frozen"
+  },
+  "recommendations": [],
+  "rejections": [],
+  "links": [],
+  "other_patterns": [
+    "Rapid onward forwarding within 10-minute window",
+    "Dispersal via fan-out transaction split",
+    "Cross-account coordination via shared mobile hardware identifier"
+  ],
+  "limitations": [
+    "Freeze recommendations are strictly advisory for human compliance review. Nothing is frozen automatically.",
+    "Transactions are limited to visibility within the participating banking network.",
+    "Downstream ATM cash-outs and crypto off-ramps have already exited the digital banking perimeter."
+  ],
+  "disclaimer": "recommendation for human review, nothing was frozen",
+  "verified": true,
+  "verification": {
+    "verified": true,
+    "badge": "verified: true",
+    "checks_passed": 17,
+    "total_checks": 17,
+    "failed_items": [],
+    "passed_items": [
+      {
+        "check": "account_exists",
+        "id": "ACC_0461",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_001",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_002",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_003",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_004",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_005",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_006",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_007",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_008",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_009",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_010",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_011",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_012",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_013",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_014",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_015",
+        "status": "PASS"
+      },
+      {
+        "check": "recoverable_sum_match",
+        "amount": 0,
+        "status": "PASS"
+      }
+    ]
+  }
+}

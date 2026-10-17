@@ -103,7 +103,7 @@ def build_freeze_list(
         if not rows:
             return {
                 "error": f"Account '{aid}' was not found in the graph.",
-                "hint": "Verify ID formatting (e.g. account 'ACC_0463') or discover accounts first using trace_money_forward.",
+                "hint": "Verify ID formatting (e.g. account 'ACC_xxxx') or discover accounts first using trace_money_forward.",
             }
 
     # 5. Money-trail check: time-ordered paths from victim

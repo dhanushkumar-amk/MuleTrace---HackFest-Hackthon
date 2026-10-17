@@ -1,0 +1,72 @@
+{
+  "session_id": "session_1792203526865",
+  "case_header": {
+    "case_id": "CASE_FR_0001",
+    "report_id": "FR_0001",
+    "victim_account": "ACC_0461",
+    "victim_name": "Ravi Kumar",
+    "stolen_amount": 85000,
+    "reported_at": 1792044900,
+    "total_recoverable": 85000,
+    "disclaimer": "recommendation for human review, nothing was frozen"
+  },
+  "recommendations": [
+    {
+      "account": "ACC_0991",
+      "bank": "HDFC",
+      "confidence": "high",
+      "priority": 1,
+      "amount_recoverable": 50000,
+      "signals": [
+        "rapid_hop"
+      ],
+      "reasons": [
+        "Forwarded money rapidly"
+      ],
+      "path_narrative": "Victim -> ACC_0991",
+      "hops": [
+        {
+          "from_account": "ACC_0461",
+          "to_account": "ACC_0991",
+          "amount": 85000,
+          "txn_id": "TX_9901",
+          "timestamp": 1792045000
+        }
+      ],
+      "tool_call_ids": [
+        "call_001",
+        "call_002"
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "account": "ACC_0476",
+      "holder_name": "Decoy Account",
+      "bank": "ICICI",
+      "reasons": [
+        "Decoy behavior profile",
+        "No onward laundering"
+      ],
+      "signals": []
+    }
+  ],
+  "links": [],
+  "freeze_list": {
+    "items": [
+      {
+        "account": "ACC_0991",
+        "confidence": "high",
+        "priority": 1,
+        "amount_recoverable": 50000,
+        "signals": [
+          "rapid_hop"
+        ]
+      }
+    ]
+  },
+  "verified": true,
+  "disclaimer": "recommendation for human review, nothing was frozen",
+  "mode": "replay",
+  "replay": true
+}

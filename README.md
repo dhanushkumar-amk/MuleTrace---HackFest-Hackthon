@@ -2,10 +2,11 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 12 — Explainability engine, live verification, deterministic text/markdown rendering, timeline, and CLI completed and verified.**
+**Status: Phase 13 — Backend API with FastAPI, Server-Sent Events (SSE) streaming, demo replay engine, and live verification completed.**
 
 ## Project summary
 
+- [`docs/API.md`](docs/API.md) — Phase 13: complete REST & SSE endpoint catalog, replay mode, and UI usage guidelines.
 - [`docs/SCOPE.md`](docs/SCOPE.md) — what we build (and deliberately don't), Track 01
   criteria mapping, risks.
 - [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — the exact 2-minute demo, second by second.
@@ -161,13 +162,28 @@ python scripts/check_setup.py
 # every step should print PASS
 ```
 
-### 5. Run the backend API
+### 5. Start Development Environment (Automated)
 ```bash
-uvicorn backend.main:app --reload --port 8000
-# health check: http://localhost:8000/health
+# Starts FalkorDB via Docker Compose, loads dataset if empty, and starts API server on port 8000:
+# Windows:
+scripts\dev_up.bat
+# Linux / macOS:
+# chmod +x scripts/dev_up.sh && ./scripts/dev_up.sh
 ```
 
-### 6. Run the frontend
+### 6. Run API Smoke Tests
+```bash
+python scripts/smoke_api.py
+# verifies all 10 core endpoints in under 2 seconds
+```
+
+### 7. Record Demo Session
+```bash
+python scripts/record_demo.py
+# runs the real agent on Ravi's report, verifies findings, and saves data/demo/ravi_run.json
+```
+
+### 8. Run the frontend (Phase 14)
 ```bash
 cd frontend
 npm install
@@ -181,6 +197,10 @@ npm run dev
 | `FALKORDB_HOST` | `localhost` | FalkorDB host |
 | `FALKORDB_PORT` | `6379` | FalkorDB port |
 | `GRAPH_NAME` | `muletrace` | FalkorDB graph name |
-| `LLM_PROVIDER` | `groq` | LLM provider |
+| `LLM_PROVIDER` | `groq` | LLM provider (only provider) |
 | `GROQ_API_KEY` | *(empty)* | Groq API key |
-| `LLM_MODEL` | `llama-3.3-70b-versatile` | LLM model |
+| `LLM_MODEL` | `qwen/qwen3.8-27b` | Groq model for reasoning |
+| `DEMO_MODE` | `live` | `live` for real LLM runs, `replay` for zero-risk demo replay |
+| `DEMO_ADMIN` | `0` | Set `1` to enable POST /api/admin/reset-memory |
+| `MAX_CONCURRENT_RUNS` | `1` | Max simultaneous agent runs (protects Groq free-tier rate limits) |
+| `INVESTIGATION_TIMEOUT_SECONDS` | `90.0` | Hard timeout before aborting a live run |

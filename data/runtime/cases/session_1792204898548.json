@@ -1,0 +1,1502 @@
+{
+  "case_header": {
+    "case_id": "CASE_FR_0001",
+    "session_id": "demo_ravi_run",
+    "report_id": "FR_0001",
+    "victim_name": "Ravi Kumar",
+    "victim_account": "ACC_0461",
+    "amount_stolen": 85000,
+    "reported_at": 1792044900,
+    "total_recoverable": 57000,
+    "total_cashed_out": 28000,
+    "recommendation_only": true
+  },
+  "timeline": [
+    {
+      "step": 1,
+      "call_id": "call_001",
+      "tool": "get_fraud_report",
+      "purpose": "Load fraud report details to identify victim, reported stolen amount, and timestamp",
+      "key_result": "Loaded fraud report FR_0001 successfully",
+      "duration_ms": 6.56,
+      "duration": "6.6 ms",
+      "ok": true
+    },
+    {
+      "step": 2,
+      "call_id": "call_002",
+      "tool": "trace_money_forward",
+      "purpose": "Trace time-ordered money flows downstream from victim account across hops",
+      "key_result": "Traced money trail forward from ACC_0461 across up to 8 hops",
+      "duration_ms": 8.37,
+      "duration": "8.4 ms",
+      "ok": true
+    },
+    {
+      "step": 3,
+      "call_id": "call_003",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0462",
+      "duration_ms": 14.15,
+      "duration": "14.2 ms",
+      "ok": true
+    },
+    {
+      "step": 4,
+      "call_id": "call_004",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0463",
+      "duration_ms": 13.56,
+      "duration": "13.6 ms",
+      "ok": true
+    },
+    {
+      "step": 5,
+      "call_id": "call_005",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0464",
+      "duration_ms": 13.79,
+      "duration": "13.8 ms",
+      "ok": true
+    },
+    {
+      "step": 6,
+      "call_id": "call_006",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0465",
+      "duration_ms": 13.64,
+      "duration": "13.6 ms",
+      "ok": true
+    },
+    {
+      "step": 7,
+      "call_id": "call_007",
+      "tool": "get_account_profile",
+      "purpose": "Inspect account profile for transaction velocity, balance held, and attached hardware/phones",
+      "key_result": "Retrieved profile and risk indicators for account ACC_0466",
+      "duration_ms": 12.67,
+      "duration": "12.7 ms",
+      "ok": true
+    },
+    {
+      "step": 8,
+      "call_id": "call_008",
+      "tool": "find_cash_out_points",
+      "purpose": "Identify terminal ATM or branch cash withdrawals along the money trail",
+      "key_result": "Scanned 5 candidate accounts for downstream cash-out points",
+      "duration_ms": 5.2,
+      "duration": "5.2 ms",
+      "ok": true
+    },
+    {
+      "step": 9,
+      "call_id": "call_009",
+      "tool": "find_shared_devices",
+      "purpose": "Search for co-used hardware devices linking suspect accounts to organized rings",
+      "key_result": "Checked shared hardware devices for ACC_0462",
+      "duration_ms": 6.83,
+      "duration": "6.8 ms",
+      "ok": true
+    },
+    {
+      "step": 10,
+      "call_id": "call_010",
+      "tool": "find_shared_phones",
+      "purpose": "Search for co-used phone numbers linking suspect accounts to organized rings",
+      "key_result": "Checked shared phone numbers for ACC_0462",
+      "duration_ms": 5.72,
+      "duration": "5.7 ms",
+      "ok": true
+    },
+    {
+      "step": 11,
+      "call_id": "call_011",
+      "tool": "find_shared_devices",
+      "purpose": "Search for co-used hardware devices linking suspect accounts to organized rings",
+      "key_result": "Checked shared hardware devices for ACC_0463",
+      "duration_ms": 8.31,
+      "duration": "8.3 ms",
+      "ok": true
+    },
+    {
+      "step": 12,
+      "call_id": "call_012",
+      "tool": "find_shared_devices",
+      "purpose": "Search for co-used hardware devices linking suspect accounts to organized rings",
+      "key_result": "Checked shared hardware devices for ACC_0464",
+      "duration_ms": 6.16,
+      "duration": "6.2 ms",
+      "ok": true
+    },
+    {
+      "step": 13,
+      "call_id": "call_013",
+      "tool": "find_shared_devices",
+      "purpose": "Search for co-used hardware devices linking suspect accounts to organized rings",
+      "key_result": "Checked shared hardware devices for ACC_0465",
+      "duration_ms": 5.44,
+      "duration": "5.4 ms",
+      "ok": true
+    },
+    {
+      "step": 14,
+      "call_id": "call_014",
+      "tool": "find_shared_devices",
+      "purpose": "Search for co-used hardware devices linking suspect accounts to organized rings",
+      "key_result": "Checked shared hardware devices for ACC_0466",
+      "duration_ms": 5.73,
+      "duration": "5.7 ms",
+      "ok": true
+    },
+    {
+      "step": 15,
+      "call_id": "call_015",
+      "tool": "find_shared_phones",
+      "purpose": "Search for co-used phone numbers linking suspect accounts to organized rings",
+      "key_result": "Checked shared phone numbers for ACC_0463",
+      "duration_ms": 4.77,
+      "duration": "4.8 ms",
+      "ok": true
+    },
+    {
+      "step": 16,
+      "call_id": "call_016",
+      "tool": "find_shared_phones",
+      "purpose": "Search for co-used phone numbers linking suspect accounts to organized rings",
+      "key_result": "Checked shared phone numbers for ACC_0464",
+      "duration_ms": 4.95,
+      "duration": "5.0 ms",
+      "ok": true
+    },
+    {
+      "step": 17,
+      "call_id": "call_017",
+      "tool": "find_shared_phones",
+      "purpose": "Search for co-used phone numbers linking suspect accounts to organized rings",
+      "key_result": "Checked shared phone numbers for ACC_0465",
+      "duration_ms": 5.1,
+      "duration": "5.1 ms",
+      "ok": true
+    },
+    {
+      "step": 18,
+      "call_id": "call_018",
+      "tool": "find_shared_phones",
+      "purpose": "Search for co-used phone numbers linking suspect accounts to organized rings",
+      "key_result": "Checked shared phone numbers for ACC_0466",
+      "duration_ms": 5.18,
+      "duration": "5.2 ms",
+      "ok": true
+    },
+    {
+      "step": 19,
+      "call_id": "call_019",
+      "tool": "get_balance_held",
+      "purpose": "Check current recoverable balances held across suspect accounts",
+      "key_result": "Queried current recoverable balances for 5 accounts",
+      "duration_ms": 5.7,
+      "duration": "5.7 ms",
+      "ok": true
+    },
+    {
+      "step": 20,
+      "call_id": "call_020",
+      "tool": "build_freeze_list",
+      "purpose": "Independently verify candidates against graph rules and produce ranked freeze recommendation",
+      "key_result": "Independently verified 5 candidates and ranked freeze recommendations",
+      "duration_ms": 79.96,
+      "duration": "80.0 ms",
+      "ok": true
+    },
+    {
+      "step": 21,
+      "call_id": "call_021",
+      "tool": "recall_past_cases",
+      "purpose": "Query historical case memory for recurring accounts and shared infrastructure",
+      "key_result": "Queried historical case memory for 5 suspect accounts",
+      "duration_ms": 7.78,
+      "duration": "7.8 ms",
+      "ok": true
+    },
+    {
+      "step": 22,
+      "call_id": "call_022",
+      "tool": "save_case_to_memory",
+      "purpose": "Persist verified case findings and flagged accounts into long-term graph memory",
+      "key_result": "Persisted verified investigation findings to graph memory",
+      "duration_ms": 12.59,
+      "duration": "12.6 ms",
+      "ok": true
+    }
+  ],
+  "highlight": {
+    "nodes": [
+      {
+        "id": "ACC_0461",
+        "role": "victim",
+        "label": "Victim: Ravi Kumar"
+      },
+      {
+        "id": "ACC_0463",
+        "role": "mule_recommended",
+        "label": "Mule #1: ACC_0463 (Rs 40,000)"
+      },
+      {
+        "id": "ACC_0462",
+        "role": "other",
+        "label": "Pass-through: ACC_0462"
+      },
+      {
+        "id": "ACC_0466",
+        "role": "mule_recommended",
+        "label": "Mule #2: ACC_0466 (Rs 15,000)"
+      },
+      {
+        "id": "ACC_0464",
+        "role": "mule_recommended",
+        "label": "Mule #3: ACC_0464 (Rs 1,000)"
+      },
+      {
+        "id": "ACC_0465",
+        "role": "mule_recommended",
+        "label": "Mule #4: ACC_0465 (Rs 1,000)"
+      },
+      {
+        "id": "CASH_ACC_0466_1792039170",
+        "role": "cash_out",
+        "label": "Cash-out: ATM Withdrawal (Rs 28,000)"
+      },
+      {
+        "id": "ACC_0476",
+        "role": "cleared",
+        "label": "Cleared Merchant: ACC_0476"
+      },
+      {
+        "id": "DEV_0593",
+        "role": "shared_device",
+        "label": "Shared Device: DEV_0593"
+      },
+      {
+        "id": "ACC_0468",
+        "role": "linked_ring",
+        "label": "Linked Ring Account: ACC_0468"
+      }
+    ],
+    "edges": [
+      {
+        "source": "ACC_0466",
+        "target": "CASH_ACC_0466_1792039170",
+        "type": "CASH_OUT",
+        "txn_id": "CO_ACC_0466_1792039170",
+        "amount": 28000,
+        "timestamp": 1792039170,
+        "role": "cash_out",
+        "sequence_index": 1
+      },
+      {
+        "source": "ACC_0463",
+        "target": "DEV_0593",
+        "type": "USED_DEVICE",
+        "txn_id": null,
+        "amount": null,
+        "timestamp": null,
+        "role": "shared_device",
+        "sequence_index": null
+      },
+      {
+        "source": "ACC_0468",
+        "target": "DEV_0593",
+        "type": "USED_DEVICE",
+        "txn_id": null,
+        "amount": null,
+        "timestamp": null,
+        "role": "shared_device",
+        "sequence_index": null
+      }
+    ],
+    "legend": {
+      "victim": "Victim account where stolen funds originated",
+      "mule_recommended": "Verified mule account recommended for human freeze review",
+      "cash_out": "Terminal cash extraction point (ATM withdrawal or external exit)",
+      "cleared": "Cleared legitimate merchant (decoy protected from false-positive freezing)",
+      "linked_ring": "Discovered account in linked un-reported syndicate ring",
+      "shared_device": "Hardware device co-used across multiple suspect accounts",
+      "other": "Pass-through account in transaction flow"
+    },
+    "disclaimer": "recommendation for human review, nothing was frozen"
+  },
+  "recommendations": [
+    {
+      "account": "ACC_0463",
+      "priority": 1,
+      "headline": "Freeze first: holds Rs 40,000",
+      "path": {
+        "nodes": [
+          {
+            "id": "ACC_0461",
+            "label": "Ravi Kumar",
+            "bank": "HDFC Bank"
+          },
+          {
+            "id": "ACC_0462",
+            "label": "Suresh Reddy",
+            "bank": "State Bank of India"
+          },
+          {
+            "id": "ACC_0463",
+            "label": "Priya Iyer",
+            "bank": "Axis Bank"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ACC_0461",
+            "target": "ACC_0462",
+            "from": "ACC_0461",
+            "to": "ACC_0462",
+            "txn_id": "TXN_005011",
+            "amount": 85000,
+            "timestamp": 1792038600,
+            "gap_seconds": 0
+          },
+          {
+            "source": "ACC_0462",
+            "target": "ACC_0463",
+            "from": "ACC_0462",
+            "to": "ACC_0463",
+            "txn_id": "TXN_005012",
+            "amount": 40000,
+            "timestamp": 1792038720,
+            "gap_seconds": 120
+          }
+        ]
+      },
+      "path_text": "Ravi -> ACC_0462 -> ACC_0463",
+      "signals": [
+        {
+          "name": "victim_money_trail",
+          "plain_english": "Received funds directly along time-ordered money trail from victim",
+          "value": "Verified at 2 hops from victim account",
+          "evidence_call_id": "call_002"
+        },
+        {
+          "name": "fan_out_split",
+          "plain_english": "Stolen funds split across multiple outbound recipient accounts",
+          "value": "Multi-recipient dispersal pattern on trail",
+          "evidence_call_id": "call_002"
+        },
+        {
+          "name": "shared_device_link",
+          "plain_english": "Shares hardware device with other suspect or mule accounts",
+          "value": "Rare hardware co-usage detected (<= 3 sharing accounts)",
+          "evidence_call_id": "call_011"
+        }
+      ],
+      "money": {
+        "recoverable": 40000,
+        "cashed_out_downstream": 0
+      },
+      "confidence": "high",
+      "steps": [
+        "Because received funds originating from the victim's stolen money trail at 2 hops (linked to call_002)",
+        "Because currently holds Rs 40,000 in recoverable balance (linked to call_004)",
+        "Because co-uses hardware device infrastructure with other fraud network accounts (linked to call_011)",
+        "Because participated in fan-out dispersal of stolen funds (linked to call_002)",
+        "Because verified by automated graph rules and ranked at priority #1 (linked to call_020)"
+      ],
+      "counter_evidence": {
+        "hypothesis": "Could this account be a high-volume merchant or innocent third party?",
+        "checks_performed": [
+          "Checked distinct senders count: does not exhibit high customer volume of legitimate merchants",
+          "Checked forward latency: rapid forwarding incompatible with legitimate business holding periods",
+          "Checked infrastructure: shares device or phone identifiers with fraud ring members"
+        ],
+        "verdict": "Innocent explanation ruled out. Account demonstrates characteristics of an active mule holding stolen funds."
+      },
+      "tool_calls": [
+        {
+          "call_id": "call_002",
+          "tool": "trace_money_forward",
+          "args_summary": "start_account_id=ACC_0461, start_time=1792037700, max_hops=8, max_paths=50",
+          "duration_ms": 8.37
+        },
+        {
+          "call_id": "call_004",
+          "tool": "get_account_profile",
+          "args_summary": "account_id=ACC_0463",
+          "duration_ms": 13.56
+        },
+        {
+          "call_id": "call_008",
+          "tool": "find_cash_out_points",
+          "args_summary": "account_ids=[5 items], limit=200",
+          "duration_ms": 5.2
+        },
+        {
+          "call_id": "call_011",
+          "tool": "find_shared_devices",
+          "args_summary": "account_id=ACC_0463",
+          "duration_ms": 8.31
+        },
+        {
+          "call_id": "call_015",
+          "tool": "find_shared_phones",
+          "args_summary": "account_id=ACC_0463",
+          "duration_ms": 4.77
+        },
+        {
+          "call_id": "call_019",
+          "tool": "get_balance_held",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 5.7
+        },
+        {
+          "call_id": "call_020",
+          "tool": "build_freeze_list",
+          "args_summary": "report_id=FR_0001, candidate_account_ids=[5 items]",
+          "duration_ms": 79.96
+        },
+        {
+          "call_id": "call_021",
+          "tool": "recall_past_cases",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 7.78
+        },
+        {
+          "call_id": "call_022",
+          "tool": "save_case_to_memory",
+          "args_summary": "report_id=FR_0001, summary=Fraud report FR_0001: Rs 85,000 stolen from victim Ravi Kumar (ACC_0461) via fake KYC verification call. Funds flowed ACC_0461 -> ACC_0462 (Suresh Reddy, SBI, emptied) -> split into two branches: (a) ACC_0463 (Priya Iyer, Axis Bank) holding Rs 40,000 with fan-out split and shared-device link signals; (b) ACC_0464 (Anil Nair, ICICI) -> ACC_0465 (Kavya Sharma, Kotak) -> ACC_0466 (Rohit Mehta, Bank of Baroda) holding Rs 15,000 with rapid-forwarding signals; Rs 28,000 already cashed out at ACC_0466. Total recoverable: Rs 57,000. No prior cases found for these accounts. Freeze recommendation (for human review): ACC_0463 (priority 1, Rs 40,000) and ACC_0466 (priority 2, Rs 15,000). ACC_0462 rejected (already emptied)., account_ids=[2 items]",
+          "duration_ms": 12.59
+        }
+      ],
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    },
+    {
+      "account": "ACC_0466",
+      "priority": 2,
+      "headline": "Freeze priority #2: holds Rs 15,000",
+      "path": {
+        "nodes": [
+          {
+            "id": "ACC_0461",
+            "label": "Ravi Kumar",
+            "bank": "HDFC Bank"
+          },
+          {
+            "id": "ACC_0462",
+            "label": "Suresh Reddy",
+            "bank": "State Bank of India"
+          },
+          {
+            "id": "ACC_0464",
+            "label": "Anil Nair",
+            "bank": "ICICI Bank"
+          },
+          {
+            "id": "ACC_0465",
+            "label": "Kavya Sharma",
+            "bank": "Kotak Mahindra Bank"
+          },
+          {
+            "id": "ACC_0466",
+            "label": "Rohit Mehta",
+            "bank": "Bank of Baroda"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ACC_0461",
+            "target": "ACC_0462",
+            "from": "ACC_0461",
+            "to": "ACC_0462",
+            "txn_id": "TXN_005011",
+            "amount": 85000,
+            "timestamp": 1792038600,
+            "gap_seconds": 0
+          },
+          {
+            "source": "ACC_0462",
+            "target": "ACC_0464",
+            "from": "ACC_0462",
+            "to": "ACC_0464",
+            "txn_id": "TXN_005013",
+            "amount": 45000,
+            "timestamp": 1792038750,
+            "gap_seconds": 150
+          },
+          {
+            "source": "ACC_0464",
+            "target": "ACC_0465",
+            "from": "ACC_0464",
+            "to": "ACC_0465",
+            "txn_id": "TXN_005014",
+            "amount": 44000,
+            "timestamp": 1792038930,
+            "gap_seconds": 180
+          },
+          {
+            "source": "ACC_0465",
+            "target": "ACC_0466",
+            "from": "ACC_0465",
+            "to": "ACC_0466",
+            "txn_id": "TXN_005015",
+            "amount": 43000,
+            "timestamp": 1792039050,
+            "gap_seconds": 120
+          }
+        ]
+      },
+      "path_text": "Ravi -> ACC_0462 -> ACC_0464 -> ACC_0465 -> ACC_0466",
+      "signals": [
+        {
+          "name": "victim_money_trail",
+          "plain_english": "Received funds directly along time-ordered money trail from victim",
+          "value": "Verified at 4 hops from victim account",
+          "evidence_call_id": "call_002"
+        },
+        {
+          "name": "rapid_forwarding",
+          "plain_english": "Forwarded funds rapidly onward within short time window (< 10 minutes)",
+          "value": "Rapid forwarding observed (forwarded >= 70% or rapid cash-out)",
+          "evidence_call_id": "call_007"
+        },
+        {
+          "name": "low_forward_latency",
+          "plain_english": "Forwarding latency significantly lower than normal retail banking baseline",
+          "value": "Forward latency <= 600 seconds",
+          "evidence_call_id": "call_007"
+        }
+      ],
+      "money": {
+        "recoverable": 15000,
+        "cashed_out_downstream": 28000
+      },
+      "confidence": "high",
+      "steps": [
+        "Because received funds originating from the victim's stolen money trail at 4 hops (linked to call_002)",
+        "Because currently holds Rs 15,000 in recoverable balance (linked to call_007)",
+        "Because exhibited rapid onward forwarding with latency under 10 minutes (linked to call_007)",
+        "Because verified by automated graph rules and ranked at priority #2 (linked to call_020)"
+      ],
+      "counter_evidence": {
+        "hypothesis": "Could this account be a high-volume merchant or innocent third party?",
+        "checks_performed": [
+          "Checked distinct senders count: does not exhibit high customer volume of legitimate merchants",
+          "Checked forward latency: rapid forwarding incompatible with legitimate business holding periods",
+          "Checked infrastructure: shares device or phone identifiers with fraud ring members"
+        ],
+        "verdict": "Innocent explanation ruled out. Account demonstrates characteristics of an active mule holding stolen funds."
+      },
+      "tool_calls": [
+        {
+          "call_id": "call_002",
+          "tool": "trace_money_forward",
+          "args_summary": "start_account_id=ACC_0461, start_time=1792037700, max_hops=8, max_paths=50",
+          "duration_ms": 8.37
+        },
+        {
+          "call_id": "call_007",
+          "tool": "get_account_profile",
+          "args_summary": "account_id=ACC_0466",
+          "duration_ms": 12.67
+        },
+        {
+          "call_id": "call_008",
+          "tool": "find_cash_out_points",
+          "args_summary": "account_ids=[5 items], limit=200",
+          "duration_ms": 5.2
+        },
+        {
+          "call_id": "call_014",
+          "tool": "find_shared_devices",
+          "args_summary": "account_id=ACC_0466",
+          "duration_ms": 5.73
+        },
+        {
+          "call_id": "call_018",
+          "tool": "find_shared_phones",
+          "args_summary": "account_id=ACC_0466",
+          "duration_ms": 5.18
+        },
+        {
+          "call_id": "call_019",
+          "tool": "get_balance_held",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 5.7
+        },
+        {
+          "call_id": "call_020",
+          "tool": "build_freeze_list",
+          "args_summary": "report_id=FR_0001, candidate_account_ids=[5 items]",
+          "duration_ms": 79.96
+        },
+        {
+          "call_id": "call_021",
+          "tool": "recall_past_cases",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 7.78
+        },
+        {
+          "call_id": "call_022",
+          "tool": "save_case_to_memory",
+          "args_summary": "report_id=FR_0001, summary=Fraud report FR_0001: Rs 85,000 stolen from victim Ravi Kumar (ACC_0461) via fake KYC verification call. Funds flowed ACC_0461 -> ACC_0462 (Suresh Reddy, SBI, emptied) -> split into two branches: (a) ACC_0463 (Priya Iyer, Axis Bank) holding Rs 40,000 with fan-out split and shared-device link signals; (b) ACC_0464 (Anil Nair, ICICI) -> ACC_0465 (Kavya Sharma, Kotak) -> ACC_0466 (Rohit Mehta, Bank of Baroda) holding Rs 15,000 with rapid-forwarding signals; Rs 28,000 already cashed out at ACC_0466. Total recoverable: Rs 57,000. No prior cases found for these accounts. Freeze recommendation (for human review): ACC_0463 (priority 1, Rs 40,000) and ACC_0466 (priority 2, Rs 15,000). ACC_0462 rejected (already emptied)., account_ids=[2 items]",
+          "duration_ms": 12.59
+        }
+      ],
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    },
+    {
+      "account": "ACC_0464",
+      "priority": 3,
+      "headline": "Freeze priority #3: holds Rs 1,000",
+      "path": {
+        "nodes": [
+          {
+            "id": "ACC_0461",
+            "label": "Ravi Kumar",
+            "bank": "HDFC Bank"
+          },
+          {
+            "id": "ACC_0462",
+            "label": "Suresh Reddy",
+            "bank": "State Bank of India"
+          },
+          {
+            "id": "ACC_0464",
+            "label": "Anil Nair",
+            "bank": "ICICI Bank"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ACC_0461",
+            "target": "ACC_0462",
+            "from": "ACC_0461",
+            "to": "ACC_0462",
+            "txn_id": "TXN_005011",
+            "amount": 85000,
+            "timestamp": 1792038600,
+            "gap_seconds": 0
+          },
+          {
+            "source": "ACC_0462",
+            "target": "ACC_0464",
+            "from": "ACC_0462",
+            "to": "ACC_0464",
+            "txn_id": "TXN_005013",
+            "amount": 45000,
+            "timestamp": 1792038750,
+            "gap_seconds": 150
+          }
+        ]
+      },
+      "path_text": "Ravi -> ACC_0462 -> ACC_0464",
+      "signals": [
+        {
+          "name": "victim_money_trail",
+          "plain_english": "Received funds directly along time-ordered money trail from victim",
+          "value": "Verified at 2 hops from victim account",
+          "evidence_call_id": "call_002"
+        },
+        {
+          "name": "rapid_forwarding",
+          "plain_english": "Forwarded funds rapidly onward within short time window (< 10 minutes)",
+          "value": "Rapid forwarding observed (forwarded >= 70% or rapid cash-out)",
+          "evidence_call_id": "call_005"
+        },
+        {
+          "name": "fan_out_split",
+          "plain_english": "Stolen funds split across multiple outbound recipient accounts",
+          "value": "Multi-recipient dispersal pattern on trail",
+          "evidence_call_id": "call_002"
+        },
+        {
+          "name": "low_forward_latency",
+          "plain_english": "Forwarding latency significantly lower than normal retail banking baseline",
+          "value": "Forward latency <= 600 seconds",
+          "evidence_call_id": "call_005"
+        }
+      ],
+      "money": {
+        "recoverable": 1000,
+        "cashed_out_downstream": 0
+      },
+      "confidence": "high",
+      "steps": [
+        "Because received funds originating from the victim's stolen money trail at 2 hops (linked to call_002)",
+        "Because currently holds Rs 1,000 in recoverable balance (linked to call_005)",
+        "Because exhibited rapid onward forwarding with latency under 10 minutes (linked to call_005)",
+        "Because participated in fan-out dispersal of stolen funds (linked to call_002)",
+        "Because verified by automated graph rules and ranked at priority #3 (linked to call_020)"
+      ],
+      "counter_evidence": {
+        "hypothesis": "Could this account be a high-volume merchant or innocent third party?",
+        "checks_performed": [
+          "Checked distinct senders count: does not exhibit high customer volume of legitimate merchants",
+          "Checked forward latency: rapid forwarding incompatible with legitimate business holding periods",
+          "Checked infrastructure: shares device or phone identifiers with fraud ring members"
+        ],
+        "verdict": "Innocent explanation ruled out. Account demonstrates characteristics of an active mule holding stolen funds."
+      },
+      "tool_calls": [
+        {
+          "call_id": "call_002",
+          "tool": "trace_money_forward",
+          "args_summary": "start_account_id=ACC_0461, start_time=1792037700, max_hops=8, max_paths=50",
+          "duration_ms": 8.37
+        },
+        {
+          "call_id": "call_005",
+          "tool": "get_account_profile",
+          "args_summary": "account_id=ACC_0464",
+          "duration_ms": 13.79
+        },
+        {
+          "call_id": "call_008",
+          "tool": "find_cash_out_points",
+          "args_summary": "account_ids=[5 items], limit=200",
+          "duration_ms": 5.2
+        },
+        {
+          "call_id": "call_012",
+          "tool": "find_shared_devices",
+          "args_summary": "account_id=ACC_0464",
+          "duration_ms": 6.16
+        },
+        {
+          "call_id": "call_016",
+          "tool": "find_shared_phones",
+          "args_summary": "account_id=ACC_0464",
+          "duration_ms": 4.95
+        },
+        {
+          "call_id": "call_019",
+          "tool": "get_balance_held",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 5.7
+        },
+        {
+          "call_id": "call_020",
+          "tool": "build_freeze_list",
+          "args_summary": "report_id=FR_0001, candidate_account_ids=[5 items]",
+          "duration_ms": 79.96
+        },
+        {
+          "call_id": "call_021",
+          "tool": "recall_past_cases",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 7.78
+        }
+      ],
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    },
+    {
+      "account": "ACC_0465",
+      "priority": 4,
+      "headline": "Freeze priority #4: holds Rs 1,000",
+      "path": {
+        "nodes": [
+          {
+            "id": "ACC_0461",
+            "label": "Ravi Kumar",
+            "bank": "HDFC Bank"
+          },
+          {
+            "id": "ACC_0462",
+            "label": "Suresh Reddy",
+            "bank": "State Bank of India"
+          },
+          {
+            "id": "ACC_0464",
+            "label": "Anil Nair",
+            "bank": "ICICI Bank"
+          },
+          {
+            "id": "ACC_0465",
+            "label": "Kavya Sharma",
+            "bank": "Kotak Mahindra Bank"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ACC_0461",
+            "target": "ACC_0462",
+            "from": "ACC_0461",
+            "to": "ACC_0462",
+            "txn_id": "TXN_005011",
+            "amount": 85000,
+            "timestamp": 1792038600,
+            "gap_seconds": 0
+          },
+          {
+            "source": "ACC_0462",
+            "target": "ACC_0464",
+            "from": "ACC_0462",
+            "to": "ACC_0464",
+            "txn_id": "TXN_005013",
+            "amount": 45000,
+            "timestamp": 1792038750,
+            "gap_seconds": 150
+          },
+          {
+            "source": "ACC_0464",
+            "target": "ACC_0465",
+            "from": "ACC_0464",
+            "to": "ACC_0465",
+            "txn_id": "TXN_005014",
+            "amount": 44000,
+            "timestamp": 1792038930,
+            "gap_seconds": 180
+          }
+        ]
+      },
+      "path_text": "Ravi -> ACC_0462 -> ACC_0464 -> ACC_0465",
+      "signals": [
+        {
+          "name": "victim_money_trail",
+          "plain_english": "Received funds directly along time-ordered money trail from victim",
+          "value": "Verified at 3 hops from victim account",
+          "evidence_call_id": "call_002"
+        },
+        {
+          "name": "rapid_forwarding",
+          "plain_english": "Forwarded funds rapidly onward within short time window (< 10 minutes)",
+          "value": "Rapid forwarding observed (forwarded >= 70% or rapid cash-out)",
+          "evidence_call_id": "call_006"
+        },
+        {
+          "name": "low_forward_latency",
+          "plain_english": "Forwarding latency significantly lower than normal retail banking baseline",
+          "value": "Forward latency <= 600 seconds",
+          "evidence_call_id": "call_006"
+        }
+      ],
+      "money": {
+        "recoverable": 1000,
+        "cashed_out_downstream": 0
+      },
+      "confidence": "high",
+      "steps": [
+        "Because received funds originating from the victim's stolen money trail at 3 hops (linked to call_002)",
+        "Because currently holds Rs 1,000 in recoverable balance (linked to call_006)",
+        "Because exhibited rapid onward forwarding with latency under 10 minutes (linked to call_006)",
+        "Because verified by automated graph rules and ranked at priority #4 (linked to call_020)"
+      ],
+      "counter_evidence": {
+        "hypothesis": "Could this account be a high-volume merchant or innocent third party?",
+        "checks_performed": [
+          "Checked distinct senders count: does not exhibit high customer volume of legitimate merchants",
+          "Checked forward latency: rapid forwarding incompatible with legitimate business holding periods",
+          "Checked infrastructure: shares device or phone identifiers with fraud ring members"
+        ],
+        "verdict": "Innocent explanation ruled out. Account demonstrates characteristics of an active mule holding stolen funds."
+      },
+      "tool_calls": [
+        {
+          "call_id": "call_002",
+          "tool": "trace_money_forward",
+          "args_summary": "start_account_id=ACC_0461, start_time=1792037700, max_hops=8, max_paths=50",
+          "duration_ms": 8.37
+        },
+        {
+          "call_id": "call_006",
+          "tool": "get_account_profile",
+          "args_summary": "account_id=ACC_0465",
+          "duration_ms": 13.64
+        },
+        {
+          "call_id": "call_008",
+          "tool": "find_cash_out_points",
+          "args_summary": "account_ids=[5 items], limit=200",
+          "duration_ms": 5.2
+        },
+        {
+          "call_id": "call_013",
+          "tool": "find_shared_devices",
+          "args_summary": "account_id=ACC_0465",
+          "duration_ms": 5.44
+        },
+        {
+          "call_id": "call_017",
+          "tool": "find_shared_phones",
+          "args_summary": "account_id=ACC_0465",
+          "duration_ms": 5.1
+        },
+        {
+          "call_id": "call_019",
+          "tool": "get_balance_held",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 5.7
+        },
+        {
+          "call_id": "call_020",
+          "tool": "build_freeze_list",
+          "args_summary": "report_id=FR_0001, candidate_account_ids=[5 items]",
+          "duration_ms": 79.96
+        },
+        {
+          "call_id": "call_021",
+          "tool": "recall_past_cases",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 7.78
+        }
+      ],
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    }
+  ],
+  "rejections": [
+    {
+      "account": "ACC_0462",
+      "priority": null,
+      "headline": "Not recommended: already emptied, holds Rs 0",
+      "path": {
+        "nodes": [],
+        "edges": []
+      },
+      "path_text": "None (excluded from freeze recommendations)",
+      "signals": [
+        {
+          "name": "high_inflow",
+          "plain_english": "High volume of incoming transactions",
+          "value": "Total inflow Rs 85,000 across 1 inbound payments",
+          "evidence_call_id": "call_003"
+        }
+      ],
+      "money": {
+        "recoverable": 0,
+        "cashed_out_downstream": 0
+      },
+      "confidence": "excluded",
+      "steps": [
+        "Because account currently holds Rs 0 in recoverable balance (linked to call_003)",
+        "Because freezing an empty account would recover zero victim funds (linked to call_020)"
+      ],
+      "counter_evidence": {
+        "superficially_suspicious_signals": [
+          "High volume of incoming transactions"
+        ],
+        "behavioral_facts": {
+          "distinct_senders": 1,
+          "forward_latency": "median 120s",
+          "device_count": 1,
+          "phone_count": 1,
+          "device_stability": "single private hardware device",
+          "phone_stability": "single private phone number",
+          "onward_ratio": 1.01,
+          "balance_held": 0
+        },
+        "why_not_enough": "High inflow (Rs 85,000) and high PageRank reflect legitimate retail customer volume with 1 distinct senders, private single-device infrastructure, and slow/no onward forwarding (onward ratio 1.01). High inflow or PageRank alone is never sufficient evidence of mule activity.",
+        "ruling": "Excluded to prevent false-positive freeze disruption to legitimate commerce."
+      },
+      "tool_calls": [
+        {
+          "call_id": "call_003",
+          "tool": "get_account_profile",
+          "args_summary": "account_id=ACC_0462",
+          "duration_ms": 14.15
+        },
+        {
+          "call_id": "call_008",
+          "tool": "find_cash_out_points",
+          "args_summary": "account_ids=[5 items], limit=200",
+          "duration_ms": 5.2
+        },
+        {
+          "call_id": "call_009",
+          "tool": "find_shared_devices",
+          "args_summary": "account_id=ACC_0462",
+          "duration_ms": 6.83
+        },
+        {
+          "call_id": "call_010",
+          "tool": "find_shared_phones",
+          "args_summary": "account_id=ACC_0462",
+          "duration_ms": 5.72
+        },
+        {
+          "call_id": "call_019",
+          "tool": "get_balance_held",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 5.7
+        },
+        {
+          "call_id": "call_020",
+          "tool": "build_freeze_list",
+          "args_summary": "report_id=FR_0001, candidate_account_ids=[5 items]",
+          "duration_ms": 79.96
+        },
+        {
+          "call_id": "call_021",
+          "tool": "recall_past_cases",
+          "args_summary": "account_ids=[5 items]",
+          "duration_ms": 7.78
+        }
+      ],
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    },
+    {
+      "account": "ACC_0476",
+      "priority": null,
+      "headline": "Not recommended: behaves like a legitimate merchant",
+      "path": {
+        "nodes": [],
+        "edges": []
+      },
+      "path_text": "None (excluded from freeze recommendations)",
+      "signals": [
+        {
+          "name": "high_inflow",
+          "plain_english": "High volume of incoming transactions",
+          "value": "Total inflow Rs 159,642 across 62 inbound payments",
+          "evidence_call_id": "call_003"
+        },
+        {
+          "name": "high_pagerank",
+          "plain_english": "High graph centrality / PageRank due to numerous inbound links",
+          "value": "62 distinct incoming senders in transaction graph",
+          "evidence_call_id": "call_003"
+        }
+      ],
+      "money": {
+        "recoverable": 0,
+        "cashed_out_downstream": 0
+      },
+      "confidence": "excluded",
+      "steps": [
+        "Because account has 62 distinct senders characteristic of legitimate commerce (linked to call_003)",
+        "Because forward latency is slow or absent (onward ratio 0.13), unlike rapid mule pass-through (linked to call_003)",
+        "Because device and phone are private and stable with no shared fraud infrastructure (linked to call_009)",
+        "Because intercepted by deterministic legitimate-merchant guard (linked to call_020)"
+      ],
+      "counter_evidence": {
+        "superficially_suspicious_signals": [
+          "High volume of incoming transactions",
+          "High graph centrality / PageRank due to numerous inbound links"
+        ],
+        "behavioral_facts": {
+          "distinct_senders": 62,
+          "forward_latency": "median 307260s",
+          "device_count": 1,
+          "phone_count": 1,
+          "device_stability": "single private hardware device",
+          "phone_stability": "single private phone number",
+          "onward_ratio": 0.13,
+          "balance_held": 160642
+        },
+        "why_not_enough": "High inflow (Rs 159,642) and high PageRank reflect legitimate retail customer volume with 62 distinct senders, private single-device infrastructure, and slow/no onward forwarding (onward ratio 0.13). High inflow or PageRank alone is never sufficient evidence of mule activity.",
+        "ruling": "Excluded to prevent false-positive freeze disruption to legitimate commerce."
+      },
+      "tool_calls": [
+        {
+          "call_id": "call_003",
+          "tool": "get_account_profile",
+          "args_summary": "account_id=ACC_0462",
+          "duration_ms": 14.15
+        },
+        {
+          "call_id": "call_009",
+          "tool": "find_shared_devices",
+          "args_summary": "account_id=ACC_0462",
+          "duration_ms": 6.83
+        },
+        {
+          "call_id": "call_020",
+          "tool": "build_freeze_list",
+          "args_summary": "report_id=FR_0001, candidate_account_ids=[5 items]",
+          "duration_ms": 79.96
+        }
+      ],
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    }
+  ],
+  "links": [
+    {
+      "account_a": "ACC_0463",
+      "account_b": "ACC_0468",
+      "shared_type": "device",
+      "shared_id": "DEV_0593",
+      "total_sharers": 2,
+      "strength": "strong",
+      "strength_eval": "Rarely shared hardware (2 accounts total); strong indicator of direct syndicate co-usage",
+      "first_seen": 0,
+      "last_seen": 0,
+      "path": [
+        "ACC_0463",
+        "DEV_0593",
+        "ACC_0468"
+      ],
+      "path_text": "ACC_0463 -> [DEV_0593] -> ACC_0468",
+      "headline": "Cross-ring link discovered: ACC_0463 and ACC_0468 share DEV_0593 (strong signal)",
+      "explanation": "Accounts ACC_0463 and ACC_0468 are linked by device DEV_0593. Total co-using accounts: 2. Assessment: Rarely shared hardware (2 accounts total); strong indicator of direct syndicate co-usage.",
+      "disclaimer": "recommendation for human review, nothing was frozen"
+    }
+  ],
+  "other_patterns": [
+    "Rapid onward forwarding within 10-minute window",
+    "Dispersal via fan-out transaction split",
+    "Cross-account coordination via shared mobile hardware identifier"
+  ],
+  "limitations": [
+    "Freeze recommendations are strictly advisory for human compliance review. Nothing is frozen automatically.",
+    "Transactions are limited to visibility within the participating banking network.",
+    "Downstream ATM cash-outs and crypto off-ramps have already exited the digital banking perimeter."
+  ],
+  "disclaimer": "recommendation for human review, nothing was frozen",
+  "verified": true,
+  "verification": {
+    "verified": true,
+    "badge": "verified: true",
+    "checks_passed": 68,
+    "total_checks": 68,
+    "failed_items": [],
+    "passed_items": [
+      {
+        "check": "account_exists",
+        "id": "ACC_0461",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0462",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0463",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0464",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0465",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0466",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0468",
+        "status": "PASS"
+      },
+      {
+        "check": "account_exists",
+        "id": "ACC_0476",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005012",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005012",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005012",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005014",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005014",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005014",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005015",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005015",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005015",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005011",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005013",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_exists",
+        "txn_id": "TXN_005014",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_amount_match",
+        "txn_id": "TXN_005014",
+        "status": "PASS"
+      },
+      {
+        "check": "txn_timestamp_match",
+        "txn_id": "TXN_005014",
+        "status": "PASS"
+      },
+      {
+        "check": "timestamp_monotonicity",
+        "account": "ACC_0463",
+        "status": "PASS"
+      },
+      {
+        "check": "timestamp_monotonicity",
+        "account": "ACC_0466",
+        "status": "PASS"
+      },
+      {
+        "check": "timestamp_monotonicity",
+        "account": "ACC_0464",
+        "status": "PASS"
+      },
+      {
+        "check": "timestamp_monotonicity",
+        "account": "ACC_0465",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_001",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_002",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_003",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_004",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_005",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_006",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_007",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_008",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_009",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_010",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_011",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_012",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_013",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_014",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_015",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_016",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_017",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_018",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_019",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_020",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_021",
+        "status": "PASS"
+      },
+      {
+        "check": "call_id_exists",
+        "call_id": "call_022",
+        "status": "PASS"
+      },
+      {
+        "check": "recoverable_sum_match",
+        "amount": 57000,
+        "status": "PASS"
+      }
+    ]
+  },
+  "session_id": "session_1792204898548",
+  "mode": "replay",
+  "replay": true
+}

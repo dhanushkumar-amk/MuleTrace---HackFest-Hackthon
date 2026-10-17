@@ -59,7 +59,7 @@ def to_markdown(explanation: Dict[str, Any]) -> str:
             conf = it.get("confidence", "high").upper()
 
             # Signal summary
-            sig_names = [s.get("plain_english", s.get("name", "")) for s in it.get("signals", [])]
+            sig_names = [s.get("plain_english", s.get("name", "")) if isinstance(s, dict) else str(s) for s in it.get("signals", [])]
             sig_text = ", ".join(sig_names) if sig_names else "Multi-hop victim trail match"
 
             # Counter-evidence innocent check

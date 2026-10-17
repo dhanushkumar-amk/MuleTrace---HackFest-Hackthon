@@ -41,7 +41,7 @@ class GetFraudReportInput(BaseModel):
 class GetAccountProfileInput(BaseModel):
     account_id: str = Field(
         ...,
-        description="Account ID to analyze behavioral features for (e.g. 'ACC_0461').",
+        description="Account ID to analyze behavioral features for (e.g. 'ACC_xxxx').",
     )
 
 
@@ -520,7 +520,7 @@ class ToolDefinition:
 
         if isinstance(raw_result, dict) and raw_result.get("found") is False:
             err_msg = f"Target resource for '{self.name}' was not found in the graph."
-            h = "Verify ID formatting (e.g. report 'FR_0001', account 'ACC_0461') or discover accounts first."
+            h = "Verify ID formatting (e.g. report 'FR_0001', account 'ACC_xxxx') or discover accounts first."
             res = {"error": err_msg, "hint": h, **raw_result}
             trace.record(
                 tool_name=self.name,
