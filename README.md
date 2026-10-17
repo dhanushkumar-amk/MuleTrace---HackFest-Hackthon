@@ -2,7 +2,7 @@
 
 AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on Connected Data). It traces UPI fraud money through chains of mule accounts stored in a FalkorDB graph, ranks which accounts to freeze, and explains every decision with the exact graph path.
 
-**Status: Phase 11 — Freeze-list ranking, decoy protection, and memory write-back (Track 02 bonus) implemented and verified.** Phase 12 (Explainability views) comes next.
+**Status: Phase 12 — Explainability engine, live verification, deterministic text/markdown rendering, timeline, and CLI completed and verified.**
 
 ## Project summary
 
@@ -10,7 +10,9 @@ AI agent for the Graph Hacks hackathon (FalkorDB, Track 01: Agents That Act on C
   criteria mapping, risks.
 - [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — the exact 2-minute demo, second by second.
 - [`docs/TOOLS.md`](docs/TOOLS.md) — the 8 agent graph tools and their JSON contracts.
-- [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) — 12 testable pass/fail checks.
+- [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) — 12 testable pass/fail checks (all verified).
+- [`docs/EXPLAIN.md`](docs/EXPLAIN.md) — Phase 12: explainability schema, verification rules, sample reports.
+- [`docs/FREEZE.md`](docs/FREEZE.md) — Phase 11: freeze-list ranking, decoy protection, memory model.
 - [`docs/SCHEMA.md`](docs/SCHEMA.md) — node/relationship schema, tool mappings, Mermaid diagram.
 - [`docs/QUERIES.md`](docs/QUERIES.md) — Phase 7: core Cypher queries, parameters, example outputs and runtimes.
 - [`docs/ALGORITHMS.md`](docs/ALGORITHMS.md) — Phase 8: graph algorithms, native discovery vs NetworkX, example outputs and runtimes.
@@ -105,6 +107,11 @@ python scripts/run_agent.py --report FR_0001 --save-memory
 
 # 12) Phase 11: run 5-run agent benchmark evaluation
 python scripts/eval_agent.py --runs 5
+
+# 13) Phase 12: explain case via CLI (text or markdown report)
+python scripts/explain_case.py --latest --format markdown
+python scripts/explain_case.py --latest --format text --polish
+python scripts/run_agent.py --report FR_0001 --explain
 ```
 
 Start FalkorDB with `docker compose up -d` (Browser UI: http://localhost:3000).

@@ -15,7 +15,7 @@ import pytest
 
 from backend.agent import run_investigation
 from backend.memory import reset_memory
-from backend.database import get_graph
+from backend.db import get_graph
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 GROUND_TRUTH_PATH = ROOT_DIR / "tests" / "ground_truth.json"

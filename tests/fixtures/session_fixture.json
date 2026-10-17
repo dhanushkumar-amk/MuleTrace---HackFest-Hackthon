@@ -1,0 +1,346 @@
+{
+  "session_id": "session_1792173229108",
+  "report_id": "FR_0001",
+  "victim_id": "ACC_0461",
+  "victim_name": "Ravi Kumar",
+  "amount_stolen": 85000,
+  "reported_at": 1792044900,
+  "tool_calls": [
+    {
+      "call_id": "call_001",
+      "timestamp": "2026-10-16T17:53:49.983866+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_fraud_report",
+      "arguments": {
+        "report_id": "FR_0001"
+      },
+      "duration_ms": 6.48,
+      "result_size": 350,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_002",
+      "timestamp": "2026-10-16T17:54:18.869788+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "trace_money_forward",
+      "arguments": {
+        "start_account_id": "ACC_0461",
+        "start_time": 1792037700,
+        "max_hops": 8,
+        "min_amount": null,
+        "max_paths": 50
+      },
+      "duration_ms": 9.89,
+      "result_size": 1591,
+      "ok": true,
+      "path": {
+        "path": ["ACC_0461", "ACC_0462"],
+        "hops": [
+          {
+            "account": "ACC_0462",
+            "txn_id": "TXN_005011",
+            "amount": 85000,
+            "timestamp": 1792038600
+          }
+        ],
+        "hop_gaps": [],
+        "total_amount": 85000
+      },
+      "error": null
+    },
+    {
+      "call_id": "call_003",
+      "timestamp": "2026-10-16T17:54:55.975489+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_account_profile",
+      "arguments": {
+        "account_id": "ACC_0462"
+      },
+      "duration_ms": 14.51,
+      "result_size": 657,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_004",
+      "timestamp": "2026-10-16T17:54:55.989175+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_account_profile",
+      "arguments": {
+        "account_id": "ACC_0463"
+      },
+      "duration_ms": 14.23,
+      "result_size": 706,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_005",
+      "timestamp": "2026-10-16T17:54:56.004528+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_account_profile",
+      "arguments": {
+        "account_id": "ACC_0464"
+      },
+      "duration_ms": 13.34,
+      "result_size": 648,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_006",
+      "timestamp": "2026-10-16T17:54:56.012248+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_account_profile",
+      "arguments": {
+        "account_id": "ACC_0465"
+      },
+      "duration_ms": 13.16,
+      "result_size": 657,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_007",
+      "timestamp": "2026-10-16T17:54:56.030123+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_account_profile",
+      "arguments": {
+        "account_id": "ACC_0466"
+      },
+      "duration_ms": 12.93,
+      "result_size": 760,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_008",
+      "timestamp": "2026-10-16T17:54:56.038491+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_cash_out_points",
+      "arguments": {
+        "account_ids": [
+          "ACC_0462",
+          "ACC_0463",
+          "ACC_0464",
+          "ACC_0465",
+          "ACC_0466"
+        ],
+        "limit": 200
+      },
+      "duration_ms": 5.53,
+      "result_size": 180,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_009",
+      "timestamp": "2026-10-16T17:54:56.038491+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_devices",
+      "arguments": {
+        "account_id": "ACC_0462"
+      },
+      "duration_ms": 5.53,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_010",
+      "timestamp": "2026-10-16T17:54:56.038491+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_phones",
+      "arguments": {
+        "account_id": "ACC_0462"
+      },
+      "duration_ms": 4.72,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_011",
+      "timestamp": "2026-10-16T17:55:34.670332+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_devices",
+      "arguments": {
+        "account_id": "ACC_0463"
+      },
+      "duration_ms": 7.15,
+      "result_size": 169,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_012",
+      "timestamp": "2026-10-16T17:55:34.676475+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_devices",
+      "arguments": {
+        "account_id": "ACC_0464"
+      },
+      "duration_ms": 6.03,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_013",
+      "timestamp": "2026-10-16T17:55:34.683190+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_devices",
+      "arguments": {
+        "account_id": "ACC_0465"
+      },
+      "duration_ms": 6.13,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_014",
+      "timestamp": "2026-10-16T17:55:34.689494+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_devices",
+      "arguments": {
+        "account_id": "ACC_0466"
+      },
+      "duration_ms": 6.15,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_015",
+      "timestamp": "2026-10-16T17:55:34.695332+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_phones",
+      "arguments": {
+        "account_id": "ACC_0463"
+      },
+      "duration_ms": 4.6,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_016",
+      "timestamp": "2026-10-16T17:55:34.695891+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_phones",
+      "arguments": {
+        "account_id": "ACC_0464"
+      },
+      "duration_ms": 5.2,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_017",
+      "timestamp": "2026-10-16T17:55:34.695891+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_phones",
+      "arguments": {
+        "account_id": "ACC_0465"
+      },
+      "duration_ms": 4.53,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_018",
+      "timestamp": "2026-10-16T17:55:34.710240+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "find_shared_phones",
+      "arguments": {
+        "account_id": "ACC_0466"
+      },
+      "duration_ms": 4.49,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_019",
+      "timestamp": "2026-10-16T17:56:14.929348+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "get_balance_held",
+      "arguments": {
+        "account_ids": [
+          "ACC_0462",
+          "ACC_0463",
+          "ACC_0464",
+          "ACC_0465",
+          "ACC_0466"
+        ]
+      },
+      "duration_ms": 5.84,
+      "result_size": 80,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_020",
+      "timestamp": "2026-10-16T17:56:15.001169+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "build_freeze_list",
+      "arguments": {
+        "report_id": "FR_0001",
+        "candidate_account_ids": [
+          "ACC_0462",
+          "ACC_0463",
+          "ACC_0464",
+          "ACC_0465",
+          "ACC_0466"
+        ]
+      },
+      "duration_ms": 81.38,
+      "result_size": 1988,
+      "ok": true,
+      "path": null,
+      "error": null
+    },
+    {
+      "call_id": "call_021",
+      "timestamp": "2026-10-16T17:57:01.156200+00:00",
+      "session_id": "session_1792173229108",
+      "tool_name": "recall_past_cases",
+      "arguments": {
+        "account_ids": [
+          "ACC_0462",
+          "ACC_0463",
+          "ACC_0464",
+          "ACC_0465",
+          "ACC_0466"
+        ]
+      },
+      "duration_ms": 8.29,
+      "result_size": 50,
+      "ok": true,
+      "path": null,
+      "error": null
+    }
+  ]
+}

@@ -242,6 +242,7 @@ async def run_investigation_async(
     t_total = time.perf_counter() - t_start
 
     result_data = InvestigationResult(
+        session_id=session_id,
         report_id=report_id,
         summary=final_summary,
         recommendation_only=True,
@@ -257,6 +258,14 @@ async def run_investigation_async(
         tool_time_seconds=round(tool_time_total, 2),
         total_time_seconds=round(t_total, 2),
     )
+
+    # Persist completed case explanation (Phase 12)
+    try:
+        from backend.explain import explain_case, save_case_explanation
+        case_expl = explain_case(session_id)
+        save_case_explanation(case_expl, session_id)
+    except Exception:
+        pass
 
     return result_data.model_dump()
 

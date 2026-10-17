@@ -71,6 +71,7 @@ def main() -> int:
     parser.add_argument("--report", default="FR_0001", help="Fraud report ID (default FR_0001)")
     parser.add_argument("--save-memory", action="store_true", help="Persist findings to memory graph")
     parser.add_argument("--max-steps", type=int, default=15, help="Maximum interaction steps")
+    parser.add_argument("--explain", action="store_true", help="Print verified plain-English markdown explanation report after run")
     args = parser.parse_args()
 
     print(f"== Launching autonomous MuleTrace agent for {args.report} ==")
@@ -80,6 +81,18 @@ def main() -> int:
         save_memory=args.save_memory,
     )
     print_table(result)
+
+    if args.explain:
+        from backend.explain import explain_case
+        from backend.explain_text import to_markdown
+        session_id = result.get("session_id")
+        if session_id:
+            print("\n" + "=" * 105)
+            print("MULETRACE PLAIN-ENGLISH CASE EXPLANATION REPORT:")
+            print("=" * 105 + "\n")
+            explanation = explain_case(session_id)
+            print(to_markdown(explanation))
+
     return 0
 
 

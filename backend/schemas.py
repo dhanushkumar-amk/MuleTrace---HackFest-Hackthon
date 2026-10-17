@@ -27,6 +27,7 @@ class NotRecommendedItem(BaseModel):
 
 
 class InvestigationResult(BaseModel):
+    session_id: str = Field(default="", description="Unique investigation trace session ID.")
     report_id: str
     summary: str
     recommendation_only: bool = True
